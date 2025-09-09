@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bedaya Medical System - Frontend
 
-## Getting Started
-
-First, run the development server:
+## 🚀 Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Utility-first styling
+- **shadcn/ui** - Modern UI components
+- **Lucide React** - Icons
+- **Geist Font** - Typography
 
-## Learn More
+## 📊 Development Status
 
-To learn more about Next.js, take a look at the following resources:
+### 🎯 Current Stage: **Foundation Setup**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- ✅ Project structure and routing
+- ✅ UI component library setup
+- ✅ Dark theme implementation
+- ✅ TypeScript configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📋 Remaining Work (Foundation Setup)
 
-## Deploy on Vercel
+- 🚧 Complete UI for Dashboard page
+- 🚧 Complete UI for Patient Management pages
+- 🚧 Complete UI for Clinic Management pages
+- 🚧 Complete UI for Laboratory Management pages
+- 🚧 Complete UI for Pharmacy Management pages
+- 🚧 Complete UI for System Reports pages
+- 🚧 Navigation and layout components
+- 🚧 Form components and validation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🚀 Next Phase (After Foundation)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 🚧 Database integration
+- 🚧 Authentication system
+- 🚧 API development
+- 🚧 Backend functionality
+
+## ✨ Features
+
+### ✅ Implemented
+
+- **Dark Theme** - Professional medical interface
+- **Responsive Layout** - Mobile-first design
+- **Component Library** - shadcn/ui integration
+- **TypeScript Setup** - Full type safety
+- **Route Structure** - Organized dashboard routes
+
+### 🚧 Planned Features
+
+- **Dashboard** - Medical system overview
+- **Patient Management** - Comprehensive patient system
+  - **Adult Patients** - Adult patient records and management
+  - **Child Patients** - Pediatric patient records and management
+  - Patient profiles, medical history, and treatment tracking
+- **Clinic Management** - Clinic operations and administration
+  - Clinic information and settings
+  - Staff management and scheduling
+  - Clinic-specific configurations
+- **Laboratory Management** - Lab operations and testing
+  - Lab test management and tracking
+  - Test results and reporting
+  - Lab equipment and inventory
+- **Pharmacy Management** - Medication and treatment system
+  - Treatment inventory and storage
+  - Medication tracking and management
+  - Patient treatment checkout system
+  - Prescription and dosage management
+- **System Reports** - Comprehensive data analytics
+  - Patient statistics and demographics
+  - Clinic performance metrics
+  - Lab test analytics and trends
+  - Overall system health and usage reports
+
+## 🎨 Design System
+
+- **Dark Theme** by default
+- **Medical-focused** color palette
+- **Accessible** components
+- **Responsive** breakpoints
