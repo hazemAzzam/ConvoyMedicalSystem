@@ -74,7 +74,11 @@ const RouteGroup = ({ group }: { group: RouteGroupType }) => {
           />
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="ml-4" forceMount suppressHydrationWarning>
+      <CollapsibleContent
+        className="mt-1 ml-4"
+        forceMount
+        suppressHydrationWarning
+      >
         <motion.div
           className={cn(
             "flex flex-col gap-1",
@@ -93,8 +97,8 @@ const RouteGroup = ({ group }: { group: RouteGroupType }) => {
               <Button
                 variant="ghost"
                 className={cn(
-                  "h-auto w-full justify-start gap-2 p-2",
-                  pathname.includes(route.href) && "!text-primary",
+                  "h-auto w-full cursor-pointer justify-start gap-2 p-2",
+                  pathname.includes(route.href) && "!text-primary bg-accent",
                 )}
               >
                 {route.icon}
