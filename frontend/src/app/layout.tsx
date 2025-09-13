@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import DashboardLayout from "./(dashboard)/_components/dashboard_layout";
 import NextThemeProvider from "@/providers/NextThemeProvider";
+import AlertDialogProvider from "@/providers/AlertDialogProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +33,8 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <NextThemeProvider>
+          <Toaster />
+          <AlertDialogProvider />
           <DashboardLayout>{children}</DashboardLayout>
         </NextThemeProvider>
       </body>
