@@ -11,7 +11,7 @@ type DashboardLayoutProps = {
 };
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { isOpen } = useSidebarState();
+  const isOpen = useSidebarState((state) => state.isOpen);
 
   return (
     <div className="flex flex-row gap-4">
@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         className={cn(
           "flex flex-1 flex-col p-4",
           "transition-margin duration-300",
-          isOpen && "md:ml-80",
+          isOpen && "md:ml-75",
         )}
       >
         <Navbar />

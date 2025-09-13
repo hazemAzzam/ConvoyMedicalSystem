@@ -15,17 +15,35 @@ import { ROUTE_GROUPS } from "@/app/(dashboard)/constants";
 import Link from "next/link";
 import { RouteGroupType } from "@/app/(dashboard)/types";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 export default function Sidebar() {
-  const isOpen = useSidebarState((state) => state.isOpen);
-  const setOpen = useSidebarState((state) => state.setOpen);
+  const { isOpen, setOpen } = useSidebarState(
+    useShallow((state) => {
+      return { isOpen: state.isOpen, setOpen: state.setOpen };
+    }),
+  );
+  // close sidebar automatically on small screens
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setOpen(false);
+      }
+    };
+    // Run once on mount
+    handleResize();
+    // Listen for resize events
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setOpen]);
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setOpen} className="">
+    <Collapsible open={isOpen} onOpenChange={setOpen}>
       <CollapsibleContent forceMount>
         <div
           className={cn(
-            "fixed top-0 left-0 h-dvh w-75 overflow-y-auto border p-4",
+            "bg-background fixed top-0 left-0 z-20 h-dvh w-75 overflow-y-auto border p-4",
             "transition-transform duration-300",
             isOpen ? "translate-x-0" : "-translate-x-full",
           )}
@@ -52,12 +70,31 @@ export default function Sidebar() {
 }
 
 const RouteGroup = ({ group }: { group: RouteGroupType }) => {
-  const { isGroupOpen, toggleGroup } = useSidebarGroupsState();
+  const { isGroupOpen, toggleGroup, closeAllGroups } = useSidebarGroupsState();
   const pathname = usePathname();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Ensure hydration is complete before using pathname-dependent logic
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  // During SSR and before hydration, only use the store state
+  // After hydration, include pathname-based logic
+
+  useEffect(() => {
+    closeAllGroups();
+  }, [pathname]);
+
+  const groupOpen = isHydrated
+    ? isGroupOpen(group.group) ||
+      group.routes.some((route) => pathname.startsWith(route.href))
+    : isGroupOpen(group.group);
+
   return (
     <Collapsible
       key={group.group}
-      open={isGroupOpen(group.group)}
+      open={groupOpen}
       onOpenChange={() => toggleGroup(group.group)}
     >
       <CollapsibleTrigger asChild>
@@ -69,7 +106,7 @@ const RouteGroup = ({ group }: { group: RouteGroupType }) => {
           <ChevronDown
             className={cn(
               "h-4 w-4 transition-transform",
-              isGroupOpen(group.group) && "rotate-180",
+              groupOpen && "rotate-180",
             )}
           />
         </Button>
@@ -82,12 +119,12 @@ const RouteGroup = ({ group }: { group: RouteGroupType }) => {
         <motion.div
           className={cn(
             "flex flex-col gap-1",
-            !isGroupOpen(group.group) && "pointer-events-none",
+            !groupOpen && "pointer-events-none",
           )}
           initial={{ opacity: 0, height: 0 }}
           animate={{
-            opacity: isGroupOpen(group.group) ? 1 : 0,
-            height: isGroupOpen(group.group) ? "auto" : 0,
+            opacity: groupOpen ? 1 : 0,
+            height: groupOpen ? "auto" : 0,
           }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -98,7 +135,9 @@ const RouteGroup = ({ group }: { group: RouteGroupType }) => {
                 variant="ghost"
                 className={cn(
                   "h-auto w-full cursor-pointer justify-start gap-2 p-2",
-                  pathname.includes(route.href) && "!text-primary bg-accent",
+                  isHydrated &&
+                    pathname.endsWith(route.href) &&
+                    "!text-primary bg-accent",
                 )}
               >
                 {route.icon}

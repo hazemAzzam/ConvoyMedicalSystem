@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "./ui/breadcrumb";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function PathBreadcrumb() {
   const pathname = usePathname();
@@ -31,13 +32,17 @@ export default function PathBreadcrumb() {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbLink asChild>
+            <Link href="/">Home</Link>
+          </BreadcrumbLink>
         </BreadcrumbItem>
         {breadcrumbItems.map((item) => (
           <React.Fragment key={item.key}>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link href={item.href}>{item.label}</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
           </React.Fragment>
         ))}
