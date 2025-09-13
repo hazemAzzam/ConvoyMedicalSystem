@@ -1,7 +1,6 @@
-import { Bell, LogOut, Menu, Moon, Settings, Sun, SunMoon } from "lucide-react";
+import { Bell, LogOut, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSidebarState } from "@/app/(dashboard)/_hooks/useSidebarState";
-import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,66 +10,23 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "./ui/avatar";
-import { Separator } from "./ui/separator";
-import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
+import { ThemeDropdown } from "./ThemeDropdown";
+import PathBreadcrumb from "./PathBreadcrumb";
 
 export default function Navbar() {
-  const openSidebar = useSidebarState((state) => state.isOpen);
-  const setOpenSidebar = useSidebarState((state) => state.setOpen);
-  const { theme, setTheme } = useTheme();
+  const { toggle } = useSidebarState();
+
   return (
     <div className="flex items-center justify-between gap-4">
-      <Collapsible open={openSidebar} onOpenChange={setOpenSidebar}>
-        <CollapsibleTrigger asChild>
-          <Button size={"icon"} variant={"outline"}>
-            <Menu />
-          </Button>
-        </CollapsibleTrigger>
-      </Collapsible>
+      <div className="flex items-center gap-4">
+        <Button size={"icon"} variant={"outline"} onClick={toggle}>
+          <Menu />
+        </Button>
+        <PathBreadcrumb />
+      </div>
 
       <div className="flex items-center gap-4" suppressHydrationWarning>
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className="flex h-9 items-center gap-2 px-2"
-            >
-              {theme === "system" ? (
-                <SunMoon className="size-4" />
-              ) : theme === "light" ? (
-                <Sun className="size-4" />
-              ) : (
-                <Moon className="size-4" />
-              )}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Change Theme</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className={cn(theme === "system" && "bg-accent")}
-              onClick={() => setTheme("system")}
-            >
-              <SunMoon className="size-4" />
-              <span>System</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className={cn(theme === "light" && "bg-accent")}
-              onClick={() => setTheme("light")}
-            >
-              <Sun className="size-4" />
-              <span>Light</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className={cn(theme === "dark" && "bg-accent")}
-              onClick={() => setTheme("dark")}
-            >
-              <Moon className="size-4" />
-              <span>Dark</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <ThemeDropdown />
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button

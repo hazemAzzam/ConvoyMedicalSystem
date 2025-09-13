@@ -28,10 +28,8 @@ export const useSidebarGroupsState = create<SidebarGroupsState>((set, get) => ({
     set({
       openGroups: [
         "Patients Management",
-        "Clinics Services",
-        "Laboratory Services",
-        "Health Records",
-        "Appointments & Scheduling",
+        "Clinics Management",
+        "Laboratory Management",
         "Administration",
       ],
     });
