@@ -163,6 +163,31 @@ const defaultStatusFilterFn =
     return filterValue.includes(status);
   };
 
+const defaultTableConfig: DataTableProps<any> = {
+  data: [],
+  columns: [],
+  searchConfig: {
+    placeholder: "Search by name, email, or phone...",
+    searchColumns: ["name", "email", "phone"],
+    showSearch: true,
+  },
+  actions: {
+    showAdd: true,
+    addButtonText: "Add",
+    onAdd: () => {},
+    showDelete: true,
+    deleteButtonText: "Delete",
+    onDelete: () => {},
+    deleteConfirmTitle: "Delete Selected?",
+    deleteConfirmDescription:
+      "This action cannot be undone. This will permanently delete the selected and all their associated data.",
+  },
+  pagination: {
+    pageSize: 10,
+    pageSizeOptions: [5, 10, 25, 50],
+  },
+};
+
 export default function DataTable<TData>({
   data,
   columns,
@@ -182,12 +207,15 @@ export default function DataTable<TData>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [paginationState, setPaginationState] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: pagination?.pageSize || 10,
+    pageSize:
+      pagination?.pageSize || defaultTableConfig.pagination?.pageSize || 10,
   });
   const [filterValues, setFilterValues] = useState<FilterValue>({});
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [sorting, setSorting] = useState<SortingState>(initialSorting || []);
+  const [sorting, setSorting] = useState<SortingState>(
+    initialSorting || defaultTableConfig.initialSorting || [],
+  );
 
   const handleDeleteRows = () => {
     const selectedRows = table.getSelectedRowModel().rows;
@@ -311,9 +339,9 @@ export default function DataTable<TData>({
     return values.sort();
   }, [
     statusFilterConfig,
-    table
-      .getColumn(statusFilterConfig?.columnId || "")
-      ?.getFacetedUniqueValues(),
+    statusFilterConfig
+      ? table.getColumn(statusFilterConfig.columnId)?.getFacetedUniqueValues()
+      : null,
   ]);
 
   // Get counts for each status
@@ -324,9 +352,9 @@ export default function DataTable<TData>({
     return statusColumn.getFacetedUniqueValues();
   }, [
     statusFilterConfig,
-    table
-      .getColumn(statusFilterConfig?.columnId || "")
-      ?.getFacetedUniqueValues(),
+    statusFilterConfig
+      ? table.getColumn(statusFilterConfig.columnId)?.getFacetedUniqueValues()
+      : null,
   ]);
 
   const selectedStatuses = useMemo(() => {
@@ -337,7 +365,9 @@ export default function DataTable<TData>({
     return filterValue ?? [];
   }, [
     statusFilterConfig,
-    table.getColumn(statusFilterConfig?.columnId || "")?.getFilterValue(),
+    statusFilterConfig
+      ? table.getColumn(statusFilterConfig.columnId)?.getFilterValue()
+      : null,
   ]);
 
   const handleStatusChange = (checked: boolean, value: string) => {

@@ -162,7 +162,9 @@ const patientColumns: ColumnDef<Patient>[] = [
       <Badge
         className={cn(
           row.getValue("status") === "Inactive" &&
-            "bg-muted-foreground/60 text-primary-foreground",
+            "bg-muted-foreground/60 text-muted-foreground",
+          row.getValue("status") === "Active" &&
+            "bg-primary text-primary-foreground",
         )}
       >
         {row.getValue("status")}
@@ -373,16 +375,6 @@ export default function PatientsPage() {
       deleteConfirmDescription:
         "This action cannot be undone. This will permanently delete the selected patients and all their associated data.",
     },
-    pagination: {
-      pageSize: 10,
-      pageSizeOptions: [5, 10, 25, 50],
-    },
-    initialSorting: [
-      {
-        id: "name",
-        desc: false,
-      },
-    ],
     rowActions: PatientRowActions,
     emptyState: loading ? "Loading patients..." : "No patients found.",
   };
@@ -396,7 +388,6 @@ export default function PatientsPage() {
         <StatsGrid stats={stats} />
 
         <DataTable {...tableConfig} />
-        <div></div>
       </div>
     </div>
   );
