@@ -5,6 +5,7 @@ import DashboardLayout from "./(dashboard)/_components/dashboard_layout";
 import NextThemeProvider from "@/providers/NextThemeProvider";
 import AlertDialogProvider from "@/providers/AlertDialogProvider";
 import { Toaster } from "@/components/ui/sonner";
+import QueryProvider from "@/providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,11 +33,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <NextThemeProvider>
-          <Toaster />
-          <AlertDialogProvider />
-          <DashboardLayout>{children}</DashboardLayout>
-        </NextThemeProvider>
+        <QueryProvider>
+          <NextThemeProvider>
+            <Toaster />
+            <AlertDialogProvider />
+            <DashboardLayout>{children}</DashboardLayout>
+          </NextThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

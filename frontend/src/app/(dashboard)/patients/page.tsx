@@ -1,19 +1,10 @@
 "use client";
+
+import { useEffect } from "react";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatsCardProps, StatsGrid } from "@/components/StatesGrid";
-import {
-  CardSimIcon,
-  Filter,
-  Search,
-  Users,
-  EllipsisIcon,
-  User,
-  Mail,
-  Phone,
-  Calendar,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Filter, EllipsisIcon, User, Calendar } from "lucide-react";
 import DataTable, { DataTableProps } from "@/components/DataTable";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
@@ -28,8 +19,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Patient } from "@/types/patient";
-import { FilterConfig, FilterValue } from "@/components/FilterSidebar";
-import { useState, useEffect } from "react";
+import { FilterConfig } from "@/components/FilterSidebar";
+import { usePatients } from "@/hooks/patient_hooks/usePatients";
+import { FaBaby, FaUser, FaUserMd } from "react-icons/fa";
 
 const stats: StatsCardProps[] = [
   {
@@ -135,57 +127,45 @@ const patientColumns: ColumnDef<Patient>[] = [
     header: "Name",
     accessorKey: "name",
     cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("name")}</div>
+      <div>
+        <div className="font-medium">{row.getValue("name")}</div>
+        <div className="text-foreground/60">code: {row.original.code}</div>
+      </div>
     ),
     size: 180,
     enableHiding: false,
   },
   {
-    header: "Email",
-    accessorKey: "email",
+    header: "Mobile Number",
+    accessorKey: "mobile_number",
     size: 220,
   },
-  {
-    header: "Phone",
-    accessorKey: "phone",
-    size: 150,
-  },
+
   {
     header: "Gender",
     accessorKey: "gender",
     size: 100,
   },
   {
-    header: "Status",
-    accessorKey: "status",
+    header: "Type",
+    accessorKey: "patient_type",
     cell: ({ row }) => (
-      <Badge
-        className={cn(
-          row.getValue("status") === "Inactive" &&
-            "bg-muted-foreground/60 text-muted-foreground",
-          row.getValue("status") === "Active" &&
-            "bg-primary text-primary-foreground",
-        )}
-      >
-        {row.getValue("status")}
-      </Badge>
+      <div className="flex items-center gap-2">
+        {row.getValue("patient_type")}
+      </div>
     ),
     size: 100,
   },
   {
-    header: "Last Visit",
-    accessorKey: "lastVisit",
+    header: "Date",
+    accessorKey: "created_at",
     cell: ({ row }) => {
-      const date = new Date(row.getValue("lastVisit"));
+      const date = new Date(row.getValue("created_at"));
       return date.toLocaleDateString();
     },
     size: 120,
   },
-  {
-    header: "Total Visits",
-    accessorKey: "totalVisits",
-    size: 120,
-  },
+
   {
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,
@@ -233,7 +213,7 @@ function PatientRowActions({ row }: { row: Row<Patient> }) {
   );
 }
 
-// Filter configuration for patients (excluding search fields)
+// Filter configuration for patients
 const patientFilters: FilterConfig[] = [
   {
     id: "status",
@@ -267,73 +247,7 @@ const patientFilters: FilterConfig[] = [
 ];
 
 export default function PatientsPage() {
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filterValues, setFilterValues] = useState<FilterValue>({});
-
-  // Sample data - in a real app, this would come from an API
-  useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setPatients([
-        {
-          id: "1",
-          name: "John Doe",
-          email: "john.doe@email.com",
-          phone: "+1 (555) 123-4567",
-          dateOfBirth: "1985-03-15",
-          gender: "Male",
-          address: "123 Main St, City, State 12345",
-          status: "Active",
-          lastVisit: "2024-01-15",
-          totalVisits: 12,
-          insuranceProvider: "Blue Cross Blue Shield",
-          emergencyContact: {
-            name: "Jane Doe",
-            phone: "+1 (555) 123-4568",
-            relationship: "Spouse",
-          },
-        },
-        {
-          id: "2",
-          name: "Jane Smith",
-          email: "jane.smith@email.com",
-          phone: "+1 (555) 234-5678",
-          dateOfBirth: "1990-07-22",
-          gender: "Female",
-          address: "456 Oak Ave, City, State 12345",
-          status: "Active",
-          lastVisit: "2024-01-10",
-          totalVisits: 8,
-          insuranceProvider: "Aetna",
-          emergencyContact: {
-            name: "Bob Smith",
-            phone: "+1 (555) 234-5679",
-            relationship: "Brother",
-          },
-        },
-        {
-          id: "3",
-          name: "Mike Johnson",
-          email: "mike.johnson@email.com",
-          phone: "+1 (555) 345-6789",
-          dateOfBirth: "1978-11-08",
-          gender: "Male",
-          address: "789 Pine Rd, City, State 12345",
-          status: "Inactive",
-          lastVisit: "2023-12-20",
-          totalVisits: 5,
-          insuranceProvider: "Cigna",
-          emergencyContact: {
-            name: "Sarah Johnson",
-            phone: "+1 (555) 345-6790",
-            relationship: "Wife",
-          },
-        },
-      ]);
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const { data: patients, isLoading, error } = usePatients();
 
   const handleAddPatient = () => {
     console.log("Add patient clicked");
@@ -342,20 +256,12 @@ export default function PatientsPage() {
 
   const handleDeletePatients = (selectedRows: Row<Patient>[]) => {
     const patientIds = selectedRows.map((row) => row.original.id);
-    setPatients((prev) =>
-      prev.filter((patient) => !patientIds.includes(patient.id)),
-    );
+
     console.log("Deleted patients:", patientIds);
   };
 
-  const handleFiltersChange = (filters: FilterValue) => {
-    setFilterValues(filters);
-    console.log("Filters changed:", filters);
-    // In a real app, you would apply these filters to your data fetching logic
-  };
-
   const tableConfig: DataTableProps<Patient> = {
-    data: patients,
+    data: patients?.results || [],
     columns: patientColumns,
     searchConfig: {
       placeholder: "Search patients by name, email, or phone...",
@@ -363,7 +269,7 @@ export default function PatientsPage() {
       showSearch: true,
     },
     filters: patientFilters,
-    onFiltersChange: handleFiltersChange,
+    // onFiltersChange: handleFiltersChange,
     actions: {
       showAdd: true,
       addButtonText: "Add Patient",
@@ -376,7 +282,7 @@ export default function PatientsPage() {
         "This action cannot be undone. This will permanently delete the selected patients and all their associated data.",
     },
     rowActions: PatientRowActions,
-    emptyState: loading ? "Loading patients..." : "No patients found.",
+    emptyState: isLoading ? "Loading patients..." : "No patients found.",
   };
 
   return (
@@ -387,7 +293,7 @@ export default function PatientsPage() {
         </div>
         <StatsGrid stats={stats} />
 
-        <DataTable {...tableConfig} />
+        <DataTable {...tableConfig} data={patients?.results || []} />
       </div>
     </div>
   );

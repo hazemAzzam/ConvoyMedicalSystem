@@ -24,6 +24,22 @@
         "documentation": {}
     },
     {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
         "label": "AppConfig",
         "importPath": "django.apps",
         "description": "django.apps",
@@ -69,6 +85,38 @@
         "description": "django.db",
         "isExtraImport": true,
         "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
         "documentation": {}
     },
     {
@@ -176,6 +224,14 @@
         "documentation": {}
     },
     {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -241,12 +297,29 @@
         "documentation": {}
     },
     {
+        "label": "django.db.models.deletion",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.db.models.deletion",
+        "description": "django.db.models.deletion",
+        "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
         "label": "uuid",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "uuid",
         "description": "uuid",
         "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "gettext_lazy",
+        "importPath": "django.utils.translation",
+        "description": "django.utils.translation",
+        "isExtraImport": true,
+        "detail": "django.utils.translation",
         "documentation": {}
     },
     {
@@ -320,6 +393,15 @@
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
         "documentation": {}
     },
     {
@@ -595,9 +677,81 @@
     {
         "label": "Migration",
         "kind": 6,
+        "importPath": "backend.others.migrations.0001_initial",
+        "description": "backend.others.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = []\n    operations = [\n        migrations.CreateModel(\n            name=\"ClinicModel\",\n            fields=[\n                (\n                    \"id\",\n                    models.BigAutoField(",
+        "detail": "backend.others.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "OthersConfig",
+        "kind": 6,
+        "importPath": "backend.others.apps",
+        "description": "backend.others.apps",
+        "peekOfCode": "class OthersConfig(AppConfig):\n    default_auto_field = \"django.db.models.BigAutoField\"\n    name = \"others\"",
+        "detail": "backend.others.apps",
+        "documentation": {}
+    },
+    {
+        "label": "FamilyHistoryModel",
+        "kind": 6,
+        "importPath": "backend.others.models",
+        "description": "backend.others.models",
+        "peekOfCode": "class FamilyHistoryModel(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n    updated_on = models.DateTimeField(auto_now=True, null=True, blank=True)\n    name = models.CharField(max_length=255)\n    def __str__(self):\n        return self.name\nclass MedicalModel(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)",
+        "detail": "backend.others.models",
+        "documentation": {}
+    },
+    {
+        "label": "MedicalModel",
+        "kind": 6,
+        "importPath": "backend.others.models",
+        "description": "backend.others.models",
+        "peekOfCode": "class MedicalModel(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n    updated_on = models.DateTimeField(auto_now=True, null=True, blank=True)\n    name = models.CharField(max_length=255)\n    def __str__(self):\n        return self.name\nclass CyanosisModel(models.Model):\n    \"\"\"Model definition for Cyanosis.\"\"\"\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)",
+        "detail": "backend.others.models",
+        "documentation": {}
+    },
+    {
+        "label": "CyanosisModel",
+        "kind": 6,
+        "importPath": "backend.others.models",
+        "description": "backend.others.models",
+        "peekOfCode": "class CyanosisModel(models.Model):\n    \"\"\"Model definition for Cyanosis.\"\"\"\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n    updated_on = models.DateTimeField(auto_now=True, null=True, blank=True)\n    name = models.CharField(max_length=50)\n    class Meta:\n        \"\"\"Meta definition for Cyanosis.\"\"\"\n        verbose_name = 'Cyanosis'\n        verbose_name_plural = 'Cyanoses'",
+        "detail": "backend.others.models",
+        "documentation": {}
+    },
+    {
+        "label": "DrugModel",
+        "kind": 6,
+        "importPath": "backend.others.models",
+        "description": "backend.others.models",
+        "peekOfCode": "class DrugModel(models.Model):\n    \"\"\"Model definition for Drug.\"\"\"\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n    updated_on = models.DateTimeField(auto_now=True, null=True, blank=True)\n    name = models.CharField(max_length=50)\n    class Meta:\n        \"\"\"Meta definition for Drug.\"\"\"\n        verbose_name = _('Drug')\n        verbose_name_plural = _('Drugs')",
+        "detail": "backend.others.models",
+        "documentation": {}
+    },
+    {
+        "label": "ClinicModel",
+        "kind": 6,
+        "importPath": "backend.others.models",
+        "description": "backend.others.models",
+        "peekOfCode": "class ClinicModel(models.Model):\n    \"\"\"Model definition for Clinic.\"\"\"\n    name = models.CharField(\"Clinic Name\", max_length=255)\n    description = models.TextField(\"Clinic Descriptions\", null=True, blank=True)\n    class Meta:\n        \"\"\"Meta definition for Clinic.\"\"\"\n        verbose_name = 'Clinic'\n        verbose_name_plural = 'Clinics'\n    def __str__(self) -> str:\n        return f\"{self.name}\"",
+        "detail": "backend.others.models",
+        "documentation": {}
+    },
+    {
+        "label": "SymptomModel",
+        "kind": 6,
+        "importPath": "backend.others.models",
+        "description": "backend.others.models",
+        "peekOfCode": "class SymptomModel(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    name = models.CharField(_(\"Symptom Name\"), max_length=255)\n    description = models.TextField(_(\"Symptom Description\"), null=True, blank=True)\n    clinic = models.ForeignKey(\"ClinicModel\", verbose_name=_(\"Clinic\"), on_delete=models.PROTECT)\n    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n    updated_on = models.DateTimeField(auto_now=True, null=True, blank=True)\n    class Meta:\n        verbose_name = _(\"Symptom\")\n        verbose_name_plural = _(\"Symptoms\")",
+        "detail": "backend.others.models",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
         "importPath": "backend.patients.migrations.0001_initial",
         "description": "backend.patients.migrations.0001_initial",
-        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = []\n    operations = [\n        migrations.CreateModel(\n            name=\"Patient\",\n            fields=[\n                (\n                    \"id\",\n                    models.UUIDField(",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        (\"others\", \"0001_initial\"),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Patient\",\n            fields=[\n                (",
         "detail": "backend.patients.migrations.0001_initial",
         "documentation": {}
     },
@@ -606,7 +760,25 @@
         "kind": 6,
         "importPath": "backend.patients.admin",
         "description": "backend.patients.admin",
-        "peekOfCode": "class PatientAdmin(admin.ModelAdmin):\n    list_display = ['id', 'name', 'phone_number', 'created_at']\n    list_filter = ['created_at']\n    search_fields = ['name', 'phone_number']\n    readonly_fields = ['id', 'created_at', 'updated_at']\n    fieldsets = (\n        ('Patient Information', {\n            'fields': ('id', 'name', 'phone_number')\n        }),\n        ('Timestamps', {",
+        "peekOfCode": "class PatientAdmin(admin.ModelAdmin):\n    list_display = ['id', 'name', 'code', 'house_number', 'mobile_number', 'gender', 'patient_type', 'created_at']\n    list_filter = ['created_at']\n    search_fields = ['name', 'mobile_number']\n    readonly_fields = ['id', 'created_at', 'updated_at']\n    fieldsets = (\n        ('Patient Information', {\n            'fields': ('patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number')\n        }),\n        ('Timestamps', {",
+        "detail": "backend.patients.admin",
+        "documentation": {}
+    },
+    {
+        "label": "AdultAdmin",
+        "kind": 6,
+        "importPath": "backend.patients.admin",
+        "description": "backend.patients.admin",
+        "peekOfCode": "class AdultAdmin(admin.ModelAdmin):\n    list_display = ['id', 'name', 'code', 'age', 'occupation', 'marital_status', 'gender', 'created_at']\n    list_filter = ['created_at', 'gender', 'marital_status', 'education_level', 'smoking']\n    search_fields = ['name', 'mobile_number', 'code', 'occupation']\n    readonly_fields = ['id', 'created_at', 'updated_at']\n    fieldsets = (\n        ('Patient Information', {\n            'fields': ('patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number')\n        }),\n        ('Adult Information', {",
+        "detail": "backend.patients.admin",
+        "documentation": {}
+    },
+    {
+        "label": "PediatricAdmin",
+        "kind": 6,
+        "importPath": "backend.patients.admin",
+        "description": "backend.patients.admin",
+        "peekOfCode": "class PediatricAdmin(admin.ModelAdmin):\n    list_display = ['id', 'name', 'code', 'gender', 'created_at']\n    list_filter = ['created_at', 'gender']\n    search_fields = ['name', 'mobile_number', 'code']\n    readonly_fields = ['id', 'created_at', 'updated_at']\n    fieldsets = (\n        ('Patient Information', {\n            'fields': ('patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number')\n        }),\n        ('Timestamps', {",
         "detail": "backend.patients.admin",
         "documentation": {}
     },
@@ -624,7 +796,70 @@
         "kind": 6,
         "importPath": "backend.patients.models",
         "description": "backend.patients.models",
-        "peekOfCode": "class Patient(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    name = models.CharField(max_length=200)\n    phone_number = models.CharField(max_length=15)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    class Meta:\n        ordering = ['-created_at']\n    def __str__(self):\n        return f\"{self.name} ({self.phone_number})\"",
+        "peekOfCode": "class Patient(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    patient_type = models.CharField(max_length=20, choices=[('adult', 'Adult'), ('pediatric', 'Pediatric')])\n    code = models.CharField(\"Code\", max_length=255, unique=True)\n    house_number = models.CharField(\"House Number\", max_length=255)\n    name = models.CharField(max_length=200)\n    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')])\n    mobile_number = models.CharField(max_length=15)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)",
+        "detail": "backend.patients.models",
+        "documentation": {}
+    },
+    {
+        "label": "Adult",
+        "kind": 6,
+        "importPath": "backend.patients.models",
+        "description": "backend.patients.models",
+        "peekOfCode": "class Adult(Patient):\n    occupation = models.CharField(max_length=255)\n    marital_status = models.CharField(max_length=255, choices=[('married', 'Married'), ('single', 'Single'), ('divorced', 'Divorced'), ('widowed', 'Widowed')])\n    children_number = models.IntegerField(default=0)\n    age_of_the_youngest = models.IntegerField(default=0)\n    education_level = models.CharField(max_length=255, choices=EDUCATION_LEVELS)\n    age = models.IntegerField(default=0)\n    # Hapits of medical importance\n    smoking = models.BooleanField(\"Smoking\", default=False)\n    smoking_rate = models.CharField(\"Rate\", max_length=255, null=True, blank=True)",
+        "detail": "backend.patients.models",
+        "documentation": {}
+    },
+    {
+        "label": "Pediatric",
+        "kind": 6,
+        "importPath": "backend.patients.models",
+        "description": "backend.patients.models",
+        "peekOfCode": "class Pediatric(Patient):\n    pass",
+        "detail": "backend.patients.models",
+        "documentation": {}
+    },
+    {
+        "label": "EDUCATION_LEVELS",
+        "kind": 5,
+        "importPath": "backend.patients.models",
+        "description": "backend.patients.models",
+        "peekOfCode": "EDUCATION_LEVELS = [\n    ('illiterate', 'Illiterate'),\n    ('read_write', 'Read and Write'),\n    ('primary', 'Primary'),\n    ('preparatory', 'Preparatory'),\n    ('secondary', 'Secondary'),\n    ('university', 'University'),\n    ('postgraduate', 'Postgraduate'),\n]\nMENSTRUATIONS = [",
+        "detail": "backend.patients.models",
+        "documentation": {}
+    },
+    {
+        "label": "MENSTRUATIONS",
+        "kind": 5,
+        "importPath": "backend.patients.models",
+        "description": "backend.patients.models",
+        "peekOfCode": "MENSTRUATIONS = [\n    ('regular', 'Regular'),\n    ('irregular', 'Irregular'),\n    ('menopause', 'Menopause'),\n]\nCONTRACEPTION_METHODS = [\n    ('implant', 'Implant'),\n    ('iud', 'IUD'),\n    ('coc', 'COC'),\n    ('other', 'Other'),",
+        "detail": "backend.patients.models",
+        "documentation": {}
+    },
+    {
+        "label": "CONTRACEPTION_METHODS",
+        "kind": 5,
+        "importPath": "backend.patients.models",
+        "description": "backend.patients.models",
+        "peekOfCode": "CONTRACEPTION_METHODS = [\n    ('implant', 'Implant'),\n    ('iud', 'IUD'),\n    ('coc', 'COC'),\n    ('other', 'Other'),\n]\nBLOOD_TRANSFUSIONS = [\n    ('no', 'No'),\n    ('occasional', 'Occasional'),\n    ('regular', 'Regular'),",
+        "detail": "backend.patients.models",
+        "documentation": {}
+    },
+    {
+        "label": "BLOOD_TRANSFUSIONS",
+        "kind": 5,
+        "importPath": "backend.patients.models",
+        "description": "backend.patients.models",
+        "peekOfCode": "BLOOD_TRANSFUSIONS = [\n    ('no', 'No'),\n    ('occasional', 'Occasional'),\n    ('regular', 'Regular'),\n]\nSURGICALS = [\n    ('icu', 'ICU'),\n    ('operation', 'Operation'),\n]\nclass Patient(models.Model):",
+        "detail": "backend.patients.models",
+        "documentation": {}
+    },
+    {
+        "label": "SURGICALS",
+        "kind": 5,
+        "importPath": "backend.patients.models",
+        "description": "backend.patients.models",
+        "peekOfCode": "SURGICALS = [\n    ('icu', 'ICU'),\n    ('operation', 'Operation'),\n]\nclass Patient(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    patient_type = models.CharField(max_length=20, choices=[('adult', 'Adult'), ('pediatric', 'Pediatric')])\n    code = models.CharField(\"Code\", max_length=255, unique=True)\n    house_number = models.CharField(\"House Number\", max_length=255)\n    name = models.CharField(max_length=200)",
         "detail": "backend.patients.models",
         "documentation": {}
     },
@@ -633,7 +868,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'phone_number']\nclass PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'phone_number', 'created_at', 'updated_at']",
+        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'mobile_number']\nclass PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number', 'created_at', 'updated_at']",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -642,7 +877,25 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'phone_number', 'created_at', 'updated_at']\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_phone_number(self, value):\n        \"\"\"Validate phone number format\"\"\"\n        if not value:\n            raise serializers.ValidationError(\"Phone number is required.\")",
+        "peekOfCode": "class PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number', 'created_at', 'updated_at']\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_mobile_number(self, value):\n        \"\"\"Validate phone number format\"\"\"\n        if not value:\n            raise serializers.ValidationError(\"Mobile number is required.\")",
+        "detail": "backend.patients.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "AdultSerializer",
+        "kind": 6,
+        "importPath": "backend.patients.serializers",
+        "description": "backend.patients.serializers",
+        "peekOfCode": "class AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    class Meta:\n        model = Adult\n        fields = [\n            # Patient fields\n            'id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number',\n            'created_at', 'updated_at',\n            # Adult specific fields\n            'occupation', 'marital_status', 'children_number', 'age_of_the_youngest', ",
+        "detail": "backend.patients.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "AdultAutocompleteSerializer",
+        "kind": 6,
+        "importPath": "backend.patients.serializers",
+        "description": "backend.patients.serializers",
+        "peekOfCode": "class AdultAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Adult\n        fields = ['id', 'name', 'mobile_number', 'age', 'occupation']",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -651,7 +904,7 @@
         "kind": 5,
         "importPath": "backend.patients.urls",
         "description": "backend.patients.urls",
-        "peekOfCode": "router = DefaultRouter()\nrouter.register(r'', PatientViewSet, basename='patients')\nurlpatterns = [\n    path('', include(router.urls)),\n]",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r'patients', PatientViewSet, basename='patients')\nrouter.register(r'adults', AdultViewSet, basename='adults')\nurlpatterns = [\n    path('', include(router.urls)),\n]",
         "detail": "backend.patients.urls",
         "documentation": {}
     },
@@ -669,7 +922,16 @@
         "kind": 6,
         "importPath": "backend.patients.views",
         "description": "backend.patients.views",
-        "peekOfCode": "class PatientViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for Patient model with autocomplete functionality\n    \"\"\"\n    queryset = Patient.objects.all()\n    serializer_class = PatientSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name', 'phone_number']\n    ordering_fields = ['name', 'created_at', 'updated_at']\n    ordering = ['-created_at']",
+        "peekOfCode": "class PatientViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for Patient model with autocomplete functionality\n    \"\"\"\n    queryset = Patient.objects.all()\n    serializer_class = PatientSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name', 'mobile_number']\n    ordering_fields = ['name', 'created_at', 'updated_at']\n    ordering = ['-created_at']",
+        "detail": "backend.patients.views",
+        "documentation": {}
+    },
+    {
+        "label": "AdultViewSet",
+        "kind": 6,
+        "importPath": "backend.patients.views",
+        "description": "backend.patients.views",
+        "peekOfCode": "class AdultViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for Adult model with autocomplete functionality\n    \"\"\"\n    queryset = Adult.objects.all()\n    serializer_class = AdultSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name', 'mobile_number', 'occupation']\n    ordering_fields = ['name', 'age', 'created_at', 'updated_at']\n    ordering = ['-created_at']",
         "detail": "backend.patients.views",
         "documentation": {}
     },
@@ -680,6 +942,15 @@
         "description": "backend.manage",
         "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault(\"DJANGO_SETTINGS_MODULE\", \"bedaya_medical_system.settings\")\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
         "detail": "backend.manage",
+        "documentation": {}
+    },
+    {
+        "label": "delete_files",
+        "kind": 2,
+        "importPath": "backend.rm_cache",
+        "description": "backend.rm_cache",
+        "peekOfCode": "def delete_files(base_dir):\n    # Regular expression to match filenames that start with four digits\n    digit_pattern = re.compile(r'^\\d{4}')\n    # Delete sqllite3\n    os.remove(os.path.join(base_dir, 'BedayaSystem', 'db.sqlite3'))\n    for root, dirs, files in os.walk(base_dir):\n        # Delete Python cache files\n        for file in files:\n            if file.endswith('.pyc') or file == '__pycache__':\n                file_path = os.path.join(root, file)",
+        "detail": "backend.rm_cache",
         "documentation": {}
     },
     {

@@ -1,5 +1,5 @@
 import { createStore } from "@/lib/createStore";
-import { AlertConfigType } from "@/types";
+import { AlertConfigType } from "@/types/alert-config-type";
 
 type AlertState = {
   isOpen: boolean;
