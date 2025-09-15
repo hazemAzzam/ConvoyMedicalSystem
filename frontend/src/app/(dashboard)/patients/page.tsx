@@ -265,7 +265,7 @@ export default function PatientsPage() {
     columns: patientColumns,
     searchConfig: {
       placeholder: "Search patients by name, email, or phone...",
-      searchColumns: ["name", "email", "phone"],
+      searchColumns: ["name", "code"],
       showSearch: true,
     },
     filters: patientFilters,
