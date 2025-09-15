@@ -1,27 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-
-import { Button } from "@/components/ui/button";
 import { StatsCardProps, StatsGrid } from "@/components/StatesGrid";
-import { Filter, EllipsisIcon, User, Calendar } from "lucide-react";
-import DataTable, { DataTableProps } from "@/components/DataTable";
-import { ColumnDef, Row } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Patient } from "@/types/patient";
-import { FilterConfig } from "@/components/FilterSidebar";
+import DataTable from "@/components/DataTable";
 import { usePatientsTable } from "@/hooks/patient_hooks/usePatientsTable";
-import { FaBaby, FaUser, FaUserMd } from "react-icons/fa";
 
 const stats: StatsCardProps[] = [
   {
