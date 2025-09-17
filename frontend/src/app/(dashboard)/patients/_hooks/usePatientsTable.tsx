@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { showAlert } from "@/hooks/use-alert-store";
 import { useDeletePatient, useDeletePatients } from "./usePatientsMutations";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 // Patient columns definition factory
 export const createPatientColumns = (): ColumnDef<Patient>[] => [
@@ -102,6 +103,7 @@ export const createPatientColumns = (): ColumnDef<Patient>[] => [
 // Custom row actions component for patients
 export function PatientRowActions({ row }: { row: Row<Patient> }) {
   const queryClient = useQueryClient();
+  const deletePatientMutation = useDeletePatient();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -137,16 +139,7 @@ export function PatientRowActions({ row }: { row: Row<Patient> }) {
               title: "Delete Patient",
               description: "Are you sure you want to delete this patient?",
               onConfirm: () => {
-                useDeletePatient(row.original.id)
-                  .then(() => {
-                    toast.success("Patient deleted successfully");
-                    queryClient.invalidateQueries({ queryKey: ["patients"] });
-                  })
-                  .catch((error) => {
-                    toast.error("Failed to delete patient", {
-                      description: error.message,
-                    });
-                  });
+                deletePatientMutation.mutate(row.original.id);
               },
             });
           }}
@@ -184,25 +177,18 @@ export const usePatientsTable = () => {
   const { data: patients, isLoading, error } = usePatients();
   const queryClient = useQueryClient();
   const patientColumns = createPatientColumns();
+  const deletePatientsMutation = useDeletePatients();
+  const router = useRouter();
 
   const handleAddPatient = () => {
     console.log("Add patient clicked");
-    // Implement add patient logic
+    router.push("/patients/add");
   };
 
   const handleDeletePatients = (selectedRows: any[]) => {
     const patientIds = selectedRows.map((row) => row.original.id);
 
-    useDeletePatients(patientIds)
-      .then(() => {
-        toast.success("Patients deleted successfully");
-        queryClient.invalidateQueries({ queryKey: ["patients"] });
-      })
-      .catch((error) => {
-        toast.error("Failed to delete patients", {
-          description: error.message,
-        });
-      });
+    deletePatientsMutation.mutate(patientIds);
   };
 
   const tableConfig: DataTableProps<Patient> = {

@@ -2,23 +2,9 @@
 
 import apiClient from "@/clients/apiClient";
 import { API_ROUTES } from "@/constants/API_ROUTES";
-import { Patient } from "../_types/patient";
 
 export const getPatients = async () => {
   const response = await apiClient.get(API_ROUTES.PATIENTS.LIST);
-  return response.data;
-};
-
-export const createPatient = async (patient: Patient) => {
-  const response = await apiClient.post(API_ROUTES.PATIENTS.CREATE, patient);
-  return response.data;
-};
-
-export const updatePatient = async (patient: Patient) => {
-  const response = await apiClient.put(
-    `${API_ROUTES.PATIENTS.UPDATE}/${patient.id}`,
-    patient,
-  );
   return response.data;
 };
 
