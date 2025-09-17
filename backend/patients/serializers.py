@@ -13,7 +13,7 @@ class PatientSerializer(serializers.ModelSerializer):
     """Full serializer for Patient model"""
     class Meta:
         model = Patient
-        fields = ['id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number', 'created_at', 'updated_at']
+        fields = "__all__"
         read_only_fields = ['id', 'created_at', 'updated_at']
     
     def validate_mobile_number(self, value):
@@ -43,30 +43,7 @@ class AdultSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Adult
-        fields = [
-            # Patient fields
-            'id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number',
-            'created_at', 'updated_at',
-            # Adult specific fields
-            'occupation', 'marital_status', 'children_number', 'age_of_the_youngest', 
-            'education_level', 'age',
-            # Habits of medical importance
-            'smoking', 'smoking_rate', 'smoking_type', 'other_smoking',
-            'cessation', 'cessation_duration',
-            'menstruation', 'gravidal_number', 'abortion_number',
-            'contraception', 'contraception_method', 'contraception_other_method',
-            # Complaints
-            'complaints',
-            # General Examination
-            'bp', 'hr', 'temp', 'rbs', 'spo2',
-            'cyanosis', 'jaundice', 'pallor',
-            # Past history
-            'medical', 'allergy', 'allergy_specification', 'blood_transfusion',
-            'blood_transfusion_duration', 'surgical', 'surgical_operation', 'icu',
-            'drugs',
-            # Family History
-            'family_history'
-        ]
+        fields = "__all__"
         read_only_fields = ['id', 'created_at', 'updated_at']
     
     def validate_mobile_number(self, value):

@@ -1,8 +1,12 @@
 "use client";
 
-import { usePatients } from "./usePatients";
+import {
+  useDeletePatient,
+  useDeletePatients,
+  usePatients,
+} from "./usePatients";
 import { DataTableProps } from "@/components/DataTable";
-import { Patient } from "@/app/(dashboard)/patients/(types)/patient";
+import { Patient } from "@/app/(dashboard)/patients/_types/patient";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -17,9 +21,13 @@ import { Button } from "@/components/ui/button";
 import { EllipsisIcon, Filter, User } from "lucide-react";
 import { FilterConfig } from "@/components/FilterSidebar";
 import { Calendar } from "lucide-react";
+import { toast } from "sonner";
+import { showAlert } from "@/hooks/use-alert-store";
 
-// Patient columns definition
-export const patientColumns: ColumnDef<Patient>[] = [
+// Patient columns definition factory
+export const createPatientColumns = (
+  deletePatient: (id: string) => void,
+): ColumnDef<Patient>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -89,14 +97,21 @@ export const patientColumns: ColumnDef<Patient>[] = [
   {
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,
-    cell: ({ row }) => <PatientRowActions row={row} />,
+    cell: ({ row }) => <PatientRowActions row={row} onDelete={deletePatient} />,
     size: 60,
     enableHiding: false,
   },
 ];
 
 // Custom row actions component for patients
-export function PatientRowActions({ row }: { row: Row<Patient> }) {
+export function PatientRowActions({
+  row,
+  onDelete,
+}: {
+  row: Row<Patient>;
+  onDelete: (id: string) => void;
+}) {
+  const deletePatientMutation = useDeletePatient();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -125,7 +140,18 @@ export function PatientRowActions({ row }: { row: Row<Patient> }) {
           <span>View Medical History</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive focus:text-destructive">
+        <DropdownMenuItem
+          className="text-destructive focus:text-destructive"
+          onClick={() => {
+            showAlert({
+              title: "Delete Patient",
+              description: "Are you sure you want to delete this patient?",
+              onConfirm: () => {
+                deletePatientMutation.mutate(row.original.id);
+              },
+            });
+          }}
+        >
           <span>Delete Patient</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -135,17 +161,6 @@ export function PatientRowActions({ row }: { row: Row<Patient> }) {
 
 // Filter configuration for patients
 export const patientFilters: FilterConfig[] = [
-  {
-    id: "status",
-    type: "multiselect",
-    label: "Status",
-    options: [
-      { value: "Active", label: "Active" },
-      { value: "Inactive", label: "Inactive" },
-      { value: "Pending", label: "Pending" },
-    ],
-    icon: <Filter className="h-4 w-4" />,
-  },
   {
     id: "gender",
     type: "select",
@@ -168,6 +183,10 @@ export const patientFilters: FilterConfig[] = [
 
 export const usePatientsTable = () => {
   const { data: patients, isLoading, error } = usePatients();
+  const deletePatientMutation = useDeletePatient();
+  const deletePatientsMutation = useDeletePatients();
+
+  const patientColumns = createPatientColumns(deletePatientMutation.mutate);
 
   const handleAddPatient = () => {
     console.log("Add patient clicked");
@@ -176,11 +195,18 @@ export const usePatientsTable = () => {
 
   const handleDeletePatients = (selectedRows: any[]) => {
     const patientIds = selectedRows.map((row) => row.original.id);
-    console.log("Deleted patients:", patientIds);
+
+    deletePatientsMutation.mutate(patientIds);
+
+    if (deletePatientsMutation.isSuccess) {
+      toast.success("Patients deleted successfully", {
+        description: `${patientIds.length} patients deleted successfully`,
+      });
+    }
   };
 
   const tableConfig: DataTableProps<Patient> = {
-    data: patients?.results || [],
+    data: patients || [],
     columns: patientColumns,
     searchConfig: {
       placeholder: "Search patients by name, code, or phone...",
@@ -199,7 +225,6 @@ export const usePatientsTable = () => {
       deleteConfirmDescription:
         "This action cannot be undone. This will permanently delete the selected patients and all their associated data.",
     },
-    rowActions: PatientRowActions,
     emptyState: isLoading ? "Loading patients..." : "No patients found.",
   };
 
@@ -207,7 +232,7 @@ export const usePatientsTable = () => {
     tableConfig,
     isLoading,
     error,
-    patients: patients?.results || [],
+    patients: patients || [],
     totalCount: patients?.count || 0,
   };
 };

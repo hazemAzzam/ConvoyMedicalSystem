@@ -18,6 +18,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import {
+  CheckCircle,
   ChevronDownIcon,
   ChevronFirstIcon,
   ChevronLastIcon,
@@ -431,47 +432,60 @@ export default function DataTable<TData>({
           {/* Delete button */}
           {actions?.showDelete &&
             table.getSelectedRowModel().rows.length > 0 && (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button className="ml-auto" variant="outline">
-                    <TrashIcon
-                      className="-ms-1 opacity-60"
-                      size={16}
-                      aria-hidden="true"
-                    />
-                    {actions.deleteButtonText || "Delete"}
-                    <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                      {table.getSelectedRowModel().rows.length}
-                    </span>
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
-                    <div
-                      className="flex size-9 shrink-0 items-center justify-center rounded-full border"
-                      aria-hidden="true"
-                    >
-                      <CircleAlertIcon className="opacity-80" size={16} />
-                    </div>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        {actions.deleteConfirmTitle ||
-                          "Are you absolutely sure?"}
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        {actions.deleteConfirmDescription ||
-                          `This action cannot be undone. This will permanently delete ${table.getSelectedRowModel().rows.length} selected ${table.getSelectedRowModel().rows.length === 1 ? "row" : "rows"}.`}
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                  </div>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDeleteRows}>
+              <>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="ml-auto" variant="outline">
+                      <TrashIcon
+                        className="-ms-1 opacity-60"
+                        size={16}
+                        aria-hidden="true"
+                      />
                       {actions.deleteButtonText || "Delete"}
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+                      <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                        {table.getSelectedRowModel().rows.length}
+                      </span>
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
+                      <div
+                        className="flex size-9 shrink-0 items-center justify-center rounded-full border"
+                        aria-hidden="true"
+                      >
+                        <CircleAlertIcon className="opacity-80" size={16} />
+                      </div>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          {actions.deleteConfirmTitle ||
+                            "Are you absolutely sure?"}
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          {actions.deleteConfirmDescription ||
+                            `This action cannot be undone. This will permanently delete ${table.getSelectedRowModel().rows.length} selected ${table.getSelectedRowModel().rows.length === 1 ? "row" : "rows"}.`}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                    </div>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDeleteRows}>
+                        {actions.deleteButtonText || "Delete"}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <Button
+                  variant="outline"
+                  onClick={() => table.toggleAllRowsSelected()}
+                >
+                  <CheckCircle
+                    className="-ms-1 opacity-60"
+                    size={16}
+                    aria-hidden="true"
+                  />
+                  Select All
+                </Button>
+              </>
             )}
           {/* Add button */}
           {actions?.showAdd && (

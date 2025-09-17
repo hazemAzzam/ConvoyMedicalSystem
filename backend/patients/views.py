@@ -5,6 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Patient, Adult
 from .serializers import PatientSerializer, PatientAutocompleteSerializer, AdultSerializer, AdultAutocompleteSerializer
+from .pagination import CustomPageNumberPagination
 
 
 class PatientViewSet(viewsets.ModelViewSet):
@@ -71,6 +72,19 @@ class PatientViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['delete'])
+    def bulk_delete(self, request):
+        """
+        Bulk delete patients
+        Usage: /api/patients/bulk_delete/
+        Body: {
+            "patient_ids": ["1", "2", "3"]
+        }
+        """
+        patient_ids = request.data.get('patient_ids', [])
+        Patient.objects.filter(id__in=patient_ids).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT, data={'message': 'Patients deleted successfully'})
 
 
 class AdultViewSet(viewsets.ModelViewSet):

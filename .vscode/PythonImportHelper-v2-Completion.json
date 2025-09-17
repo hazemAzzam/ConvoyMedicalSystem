@@ -273,6 +273,22 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "settings",
         "importPath": "django.conf",
         "description": "django.conf",
@@ -323,6 +339,30 @@
         "documentation": {}
     },
     {
+        "label": "PageNumberPagination",
+        "importPath": "rest_framework.pagination",
+        "description": "rest_framework.pagination",
+        "isExtraImport": true,
+        "detail": "rest_framework.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
         "label": "serializers",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -355,14 +395,6 @@
         "documentation": {}
     },
     {
-        "label": "Response",
-        "importPath": "rest_framework.response",
-        "description": "rest_framework.response",
-        "isExtraImport": true,
-        "detail": "rest_framework.response",
-        "documentation": {}
-    },
-    {
         "label": "DjangoFilterBackend",
         "importPath": "django_filters.rest_framework",
         "description": "django_filters.rest_framework",
@@ -387,6 +419,49 @@
         "documentation": {}
     },
     {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
@@ -402,15 +477,6 @@
         "importPath": "re",
         "description": "re",
         "detail": "re",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -589,7 +655,7 @@
         "kind": 5,
         "importPath": "backend.bedaya_medical_system.settings",
         "description": "backend.bedaya_medical_system.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\n# Django REST Framework\nREST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': [\n        # 'rest_framework_simplejwt.authentication.JWTAuthentication',\n    ],\n    'DEFAULT_PERMISSION_CLASSES': [\n        # 'rest_framework.permissions.IsAuthenticated',\n    ],\n    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\n# Django REST Framework\nREST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': [\n        # 'rest_framework_simplejwt.authentication.JWTAuthentication',\n    ],\n    'DEFAULT_PERMISSION_CLASSES': [\n        # 'rest_framework.permissions.IsAuthenticated',\n    ],\n    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',",
         "detail": "backend.bedaya_medical_system.settings",
         "documentation": {}
     },
@@ -598,7 +664,7 @@
         "kind": 5,
         "importPath": "backend.bedaya_medical_system.settings",
         "description": "backend.bedaya_medical_system.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': [\n        # 'rest_framework_simplejwt.authentication.JWTAuthentication',\n    ],\n    'DEFAULT_PERMISSION_CLASSES': [\n        # 'rest_framework.permissions.IsAuthenticated',\n    ],\n    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',\n    'PAGE_SIZE': 20,\n    'DEFAULT_FILTER_BACKENDS': [",
+        "peekOfCode": "REST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': [\n        # 'rest_framework_simplejwt.authentication.JWTAuthentication',\n    ],\n    'DEFAULT_PERMISSION_CLASSES': [\n        # 'rest_framework.permissions.IsAuthenticated',\n    ],\n    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',\n    'PAGE_SIZE': 20,\n    'PAGE_SIZE_QUERY_PARAM': 'page_size',",
         "detail": "backend.bedaya_medical_system.settings",
         "documentation": {}
     },
@@ -864,11 +930,20 @@
         "documentation": {}
     },
     {
+        "label": "CustomPageNumberPagination",
+        "kind": 6,
+        "importPath": "backend.patients.pagination",
+        "description": "backend.patients.pagination",
+        "peekOfCode": "class CustomPageNumberPagination(PageNumberPagination):\n    \"\"\"\n    Custom pagination class that provides detailed pagination information\n    \"\"\"\n    page_size = 20\n    page_size_query_param = 'page_size'\n    max_page_size = 100\n    def get_paginated_response(self, data):\n        return Response({\n            'count': self.page.paginator.count,",
+        "detail": "backend.patients.pagination",
+        "documentation": {}
+    },
+    {
         "label": "PatientAutocompleteSerializer",
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'mobile_number']\nclass PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number', 'created_at', 'updated_at']",
+        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'mobile_number']\nclass PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = \"__all__\"",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -877,7 +952,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number', 'created_at', 'updated_at']\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_mobile_number(self, value):\n        \"\"\"Validate phone number format\"\"\"\n        if not value:\n            raise serializers.ValidationError(\"Mobile number is required.\")",
+        "peekOfCode": "class PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_mobile_number(self, value):\n        \"\"\"Validate phone number format\"\"\"\n        if not value:\n            raise serializers.ValidationError(\"Mobile number is required.\")",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -886,7 +961,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    class Meta:\n        model = Adult\n        fields = [\n            # Patient fields\n            'id', 'patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number',\n            'created_at', 'updated_at',\n            # Adult specific fields\n            'occupation', 'marital_status', 'children_number', 'age_of_the_youngest', ",
+        "peekOfCode": "class AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    class Meta:\n        model = Adult\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_mobile_number(self, value):\n        \"\"\"Validate phone number format\"\"\"\n        if not value:\n            raise serializers.ValidationError(\"Mobile number is required.\")",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -936,12 +1011,228 @@
         "documentation": {}
     },
     {
+        "label": "generate_phone_number",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]\n    prefix = random.choice(prefixes)\n    number = ''.join([str(random.randint(0, 9)) for _ in range(8)])\n    return f\"{prefix}{number}\"\ndef generate_patient_code() -> str:\n    \"\"\"Generate a unique patient code\"\"\"\n    return f\"PAT{random.randint(10000, 99999)}\"\ndef generate_house_number() -> str:",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "generate_patient_code",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def generate_patient_code() -> str:\n    \"\"\"Generate a unique patient code\"\"\"\n    return f\"PAT{random.randint(10000, 99999)}\"\ndef generate_house_number() -> str:\n    \"\"\"Generate a random house number\"\"\"\n    return f\"{random.randint(1, 999)}\"\ndef generate_random_date(start_date: datetime, end_date: datetime) -> str:\n    \"\"\"Generate a random date between start and end dates\"\"\"\n    time_between = end_date - start_date\n    days_between = time_between.days",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "generate_house_number",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def generate_house_number() -> str:\n    \"\"\"Generate a random house number\"\"\"\n    return f\"{random.randint(1, 999)}\"\ndef generate_random_date(start_date: datetime, end_date: datetime) -> str:\n    \"\"\"Generate a random date between start and end dates\"\"\"\n    time_between = end_date - start_date\n    days_between = time_between.days\n    random_days = random.randint(0, days_between)\n    random_date = start_date + timedelta(days=random_days)\n    return random_date.isoformat()",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "generate_random_date",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def generate_random_date(start_date: datetime, end_date: datetime) -> str:\n    \"\"\"Generate a random date between start and end dates\"\"\"\n    time_between = end_date - start_date\n    days_between = time_between.days\n    random_days = random.randint(0, days_between)\n    random_date = start_date + timedelta(days=random_days)\n    return random_date.isoformat()\ndef create_random_patient() -> Dict:\n    \"\"\"Create a random patient data\"\"\"\n    gender = random.choice(GENDERS)",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "create_random_patient",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def create_random_patient() -> Dict:\n    \"\"\"Create a random patient data\"\"\"\n    gender = random.choice(GENDERS)\n    patient_type = random.choice(PATIENT_TYPES)\n    # Base patient data\n    patient_data = {\n        \"patient_type\": patient_type,\n        \"code\": generate_patient_code(),\n        \"house_number\": generate_house_number(),\n        \"name\": f\"{random.choice(FIRST_NAMES)} {random.choice(LAST_NAMES)}\",",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "create_patients",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def create_patients(count: int = 10) -> List[Dict]:\n    \"\"\"Create multiple random patients\"\"\"\n    patients = []\n    for _ in range(count):\n        patients.append(create_random_patient())\n    return patients\ndef post_patient_to_api(patient_data: Dict) -> bool:\n    \"\"\"Post a single patient to the API\"\"\"\n    try:\n        response = requests.post(",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "post_patient_to_api",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def post_patient_to_api(patient_data: Dict) -> bool:\n    \"\"\"Post a single patient to the API\"\"\"\n    try:\n        response = requests.post(\n            PATIENTS_ENDPOINT,\n            json=patient_data,\n            headers={\"Content-Type\": \"application/json\"}\n        )\n        if response.status_code == 201:\n            print(f\"✅ Created patient: {patient_data['name']} ({patient_data['code']})\")",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "def main():\n    \"\"\"Main function to create random patients\"\"\"\n    print(\"🏥 Random Patient Generator\")\n    print(\"=\" * 50)\n    # Get number of patients to create\n    try:\n        count = int(input(\"How many patients do you want to create? (default: 10): \") or \"10\")\n    except ValueError:\n        count = 10\n    print(f\"\\n📝 Creating {count} random patients...\")",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "API_BASE_URL",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "API_BASE_URL = \"http://localhost:8000/api\"\nPATIENTS_ENDPOINT = f\"{API_BASE_URL}/patients/patients/\"\n# Sample data for random generation\nFIRST_NAMES = [\n    \"Ahmed\", \"Mohamed\", \"Ali\", \"Omar\", \"Hassan\", \"Mahmoud\", \"Ibrahim\", \"Youssef\",\n    \"Fatima\", \"Aisha\", \"Khadija\", \"Zainab\", \"Mariam\", \"Amina\", \"Safiya\", \"Ruqayya\",\n    \"John\", \"Sarah\", \"Michael\", \"Emily\", \"David\", \"Jessica\", \"Robert\", \"Ashley\",\n    \"William\", \"Jennifer\", \"James\", \"Lisa\", \"Christopher\", \"Nancy\"\n]\nLAST_NAMES = [",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "PATIENTS_ENDPOINT",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "PATIENTS_ENDPOINT = f\"{API_BASE_URL}/patients/patients/\"\n# Sample data for random generation\nFIRST_NAMES = [\n    \"Ahmed\", \"Mohamed\", \"Ali\", \"Omar\", \"Hassan\", \"Mahmoud\", \"Ibrahim\", \"Youssef\",\n    \"Fatima\", \"Aisha\", \"Khadija\", \"Zainab\", \"Mariam\", \"Amina\", \"Safiya\", \"Ruqayya\",\n    \"John\", \"Sarah\", \"Michael\", \"Emily\", \"David\", \"Jessica\", \"Robert\", \"Ashley\",\n    \"William\", \"Jennifer\", \"James\", \"Lisa\", \"Christopher\", \"Nancy\"\n]\nLAST_NAMES = [\n    \"Al-Rashid\", \"Al-Mahmoud\", \"Al-Hassan\", \"Al-Omar\", \"Al-Ahmad\", \"Al-Ibrahim\",",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "FIRST_NAMES",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "FIRST_NAMES = [\n    \"Ahmed\", \"Mohamed\", \"Ali\", \"Omar\", \"Hassan\", \"Mahmoud\", \"Ibrahim\", \"Youssef\",\n    \"Fatima\", \"Aisha\", \"Khadija\", \"Zainab\", \"Mariam\", \"Amina\", \"Safiya\", \"Ruqayya\",\n    \"John\", \"Sarah\", \"Michael\", \"Emily\", \"David\", \"Jessica\", \"Robert\", \"Ashley\",\n    \"William\", \"Jennifer\", \"James\", \"Lisa\", \"Christopher\", \"Nancy\"\n]\nLAST_NAMES = [\n    \"Al-Rashid\", \"Al-Mahmoud\", \"Al-Hassan\", \"Al-Omar\", \"Al-Ahmad\", \"Al-Ibrahim\",\n    \"Al-Youssef\", \"Al-Mahmoud\", \"Al-Farouk\", \"Al-Nasser\", \"Al-Saad\", \"Al-Khalil\",\n    \"Smith\", \"Johnson\", \"Williams\", \"Brown\", \"Jones\", \"Garcia\", \"Miller\", \"Davis\",",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "LAST_NAMES",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "LAST_NAMES = [\n    \"Al-Rashid\", \"Al-Mahmoud\", \"Al-Hassan\", \"Al-Omar\", \"Al-Ahmad\", \"Al-Ibrahim\",\n    \"Al-Youssef\", \"Al-Mahmoud\", \"Al-Farouk\", \"Al-Nasser\", \"Al-Saad\", \"Al-Khalil\",\n    \"Smith\", \"Johnson\", \"Williams\", \"Brown\", \"Jones\", \"Garcia\", \"Miller\", \"Davis\",\n    \"Rodriguez\", \"Martinez\", \"Hernandez\", \"Lopez\", \"Gonzalez\", \"Wilson\", \"Anderson\"\n]\nOCCUPATIONS = [\n    \"Doctor\", \"Engineer\", \"Teacher\", \"Lawyer\", \"Accountant\", \"Nurse\", \"Manager\",\n    \"Sales Representative\", \"Software Developer\", \"Architect\", \"Chef\", \"Artist\",\n    \"Musician\", \"Writer\", \"Photographer\", \"Designer\", \"Consultant\", \"Analyst\",",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "OCCUPATIONS",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "OCCUPATIONS = [\n    \"Doctor\", \"Engineer\", \"Teacher\", \"Lawyer\", \"Accountant\", \"Nurse\", \"Manager\",\n    \"Sales Representative\", \"Software Developer\", \"Architect\", \"Chef\", \"Artist\",\n    \"Musician\", \"Writer\", \"Photographer\", \"Designer\", \"Consultant\", \"Analyst\",\n    \"Administrator\", \"Technician\", \"Student\", \"Retired\", \"Unemployed\", \"Business Owner\"\n]\nEDUCATION_LEVELS = [\n    \"illiterate\", \"read_write\", \"primary\", \"preparatory\", \"secondary\", \"university\", \"postgraduate\"\n]\nMARITAL_STATUSES = [\"married\", \"single\", \"divorced\", \"widowed\"]",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "EDUCATION_LEVELS",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "EDUCATION_LEVELS = [\n    \"illiterate\", \"read_write\", \"primary\", \"preparatory\", \"secondary\", \"university\", \"postgraduate\"\n]\nMARITAL_STATUSES = [\"married\", \"single\", \"divorced\", \"widowed\"]\nGENDERS = [\"male\", \"female\"]\nPATIENT_TYPES = [\"adult\", \"pediatric\"]\nCONTRACEPTION_METHODS = [\"implant\", \"iud\", \"coc\", \"other\"]\nMENSTRUATION_CHOICES = [\"regular\", \"irregular\", \"menopause\"]\nBLOOD_TRANSFUSION_CHOICES = [\"no\", \"occasional\", \"regular\"]\nSURGICAL_CHOICES = [\"icu\", \"operation\"]",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "MARITAL_STATUSES",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "MARITAL_STATUSES = [\"married\", \"single\", \"divorced\", \"widowed\"]\nGENDERS = [\"male\", \"female\"]\nPATIENT_TYPES = [\"adult\", \"pediatric\"]\nCONTRACEPTION_METHODS = [\"implant\", \"iud\", \"coc\", \"other\"]\nMENSTRUATION_CHOICES = [\"regular\", \"irregular\", \"menopause\"]\nBLOOD_TRANSFUSION_CHOICES = [\"no\", \"occasional\", \"regular\"]\nSURGICAL_CHOICES = [\"icu\", \"operation\"]\ndef generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "GENDERS",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "GENDERS = [\"male\", \"female\"]\nPATIENT_TYPES = [\"adult\", \"pediatric\"]\nCONTRACEPTION_METHODS = [\"implant\", \"iud\", \"coc\", \"other\"]\nMENSTRUATION_CHOICES = [\"regular\", \"irregular\", \"menopause\"]\nBLOOD_TRANSFUSION_CHOICES = [\"no\", \"occasional\", \"regular\"]\nSURGICAL_CHOICES = [\"icu\", \"operation\"]\ndef generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]\n    prefix = random.choice(prefixes)",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "PATIENT_TYPES",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "PATIENT_TYPES = [\"adult\", \"pediatric\"]\nCONTRACEPTION_METHODS = [\"implant\", \"iud\", \"coc\", \"other\"]\nMENSTRUATION_CHOICES = [\"regular\", \"irregular\", \"menopause\"]\nBLOOD_TRANSFUSION_CHOICES = [\"no\", \"occasional\", \"regular\"]\nSURGICAL_CHOICES = [\"icu\", \"operation\"]\ndef generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]\n    prefix = random.choice(prefixes)\n    number = ''.join([str(random.randint(0, 9)) for _ in range(8)])",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "CONTRACEPTION_METHODS",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "CONTRACEPTION_METHODS = [\"implant\", \"iud\", \"coc\", \"other\"]\nMENSTRUATION_CHOICES = [\"regular\", \"irregular\", \"menopause\"]\nBLOOD_TRANSFUSION_CHOICES = [\"no\", \"occasional\", \"regular\"]\nSURGICAL_CHOICES = [\"icu\", \"operation\"]\ndef generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]\n    prefix = random.choice(prefixes)\n    number = ''.join([str(random.randint(0, 9)) for _ in range(8)])\n    return f\"{prefix}{number}\"",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "MENSTRUATION_CHOICES",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "MENSTRUATION_CHOICES = [\"regular\", \"irregular\", \"menopause\"]\nBLOOD_TRANSFUSION_CHOICES = [\"no\", \"occasional\", \"regular\"]\nSURGICAL_CHOICES = [\"icu\", \"operation\"]\ndef generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]\n    prefix = random.choice(prefixes)\n    number = ''.join([str(random.randint(0, 9)) for _ in range(8)])\n    return f\"{prefix}{number}\"\ndef generate_patient_code() -> str:",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "BLOOD_TRANSFUSION_CHOICES",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "BLOOD_TRANSFUSION_CHOICES = [\"no\", \"occasional\", \"regular\"]\nSURGICAL_CHOICES = [\"icu\", \"operation\"]\ndef generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]\n    prefix = random.choice(prefixes)\n    number = ''.join([str(random.randint(0, 9)) for _ in range(8)])\n    return f\"{prefix}{number}\"\ndef generate_patient_code() -> str:\n    \"\"\"Generate a unique patient code\"\"\"",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
+        "label": "SURGICAL_CHOICES",
+        "kind": 5,
+        "importPath": "backend.create_random_patients",
+        "description": "backend.create_random_patients",
+        "peekOfCode": "SURGICAL_CHOICES = [\"icu\", \"operation\"]\ndef generate_phone_number() -> str:\n    \"\"\"Generate a random Egyptian phone number\"\"\"\n    prefixes = [\"010\", \"011\", \"012\", \"015\"]\n    prefix = random.choice(prefixes)\n    number = ''.join([str(random.randint(0, 9)) for _ in range(8)])\n    return f\"{prefix}{number}\"\ndef generate_patient_code() -> str:\n    \"\"\"Generate a unique patient code\"\"\"\n    return f\"PAT{random.randint(10000, 99999)}\"",
+        "detail": "backend.create_random_patients",
+        "documentation": {}
+    },
+    {
         "label": "main",
         "kind": 2,
         "importPath": "backend.manage",
         "description": "backend.manage",
         "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault(\"DJANGO_SETTINGS_MODULE\", \"bedaya_medical_system.settings\")\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
         "detail": "backend.manage",
+        "documentation": {}
+    },
+    {
+        "label": "create_quick_patients",
+        "kind": 2,
+        "importPath": "backend.quick_create_patients",
+        "description": "backend.quick_create_patients",
+        "peekOfCode": "def create_quick_patients():\n    \"\"\"Create 5 random patients quickly\"\"\"\n    # Sample data\n    names = [\"Ahmed Ali\", \"Fatima Hassan\", \"Mohamed Omar\", \"Aisha Youssef\", \"Omar Mahmoud\"]\n    genders = [\"male\", \"female\"]\n    occupations = [\"Doctor\", \"Engineer\", \"Teacher\", \"Nurse\", \"Manager\"]\n    patients_created = 0\n    for i, name in enumerate(names):\n        patient_data = {\n            \"patient_type\": \"adult\",",
+        "detail": "backend.quick_create_patients",
+        "documentation": {}
+    },
+    {
+        "label": "API_BASE_URL",
+        "kind": 5,
+        "importPath": "backend.quick_create_patients",
+        "description": "backend.quick_create_patients",
+        "peekOfCode": "API_BASE_URL = \"http://localhost:8000/api\"\nPATIENTS_ENDPOINT = f\"{API_BASE_URL}/patients/patients/\"\ndef create_quick_patients():\n    \"\"\"Create 5 random patients quickly\"\"\"\n    # Sample data\n    names = [\"Ahmed Ali\", \"Fatima Hassan\", \"Mohamed Omar\", \"Aisha Youssef\", \"Omar Mahmoud\"]\n    genders = [\"male\", \"female\"]\n    occupations = [\"Doctor\", \"Engineer\", \"Teacher\", \"Nurse\", \"Manager\"]\n    patients_created = 0\n    for i, name in enumerate(names):",
+        "detail": "backend.quick_create_patients",
+        "documentation": {}
+    },
+    {
+        "label": "PATIENTS_ENDPOINT",
+        "kind": 5,
+        "importPath": "backend.quick_create_patients",
+        "description": "backend.quick_create_patients",
+        "peekOfCode": "PATIENTS_ENDPOINT = f\"{API_BASE_URL}/patients/patients/\"\ndef create_quick_patients():\n    \"\"\"Create 5 random patients quickly\"\"\"\n    # Sample data\n    names = [\"Ahmed Ali\", \"Fatima Hassan\", \"Mohamed Omar\", \"Aisha Youssef\", \"Omar Mahmoud\"]\n    genders = [\"male\", \"female\"]\n    occupations = [\"Doctor\", \"Engineer\", \"Teacher\", \"Nurse\", \"Manager\"]\n    patients_created = 0\n    for i, name in enumerate(names):\n        patient_data = {",
+        "detail": "backend.quick_create_patients",
         "documentation": {}
     },
     {
