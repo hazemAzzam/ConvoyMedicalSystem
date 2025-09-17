@@ -327,70 +327,6 @@ export default function DataTable<TData>({
     },
   });
 
-  // Get unique status values
-  const uniqueStatusValues = useMemo(() => {
-    if (!statusFilterConfig) return [];
-    const statusColumn = table.getColumn(statusFilterConfig.columnId);
-
-    if (!statusColumn) return [];
-
-    const values = Array.from(statusColumn.getFacetedUniqueValues().keys());
-
-    return values.sort();
-  }, [
-    statusFilterConfig,
-    statusFilterConfig
-      ? table.getColumn(statusFilterConfig.columnId)?.getFacetedUniqueValues()
-      : null,
-  ]);
-
-  // Get counts for each status
-  const statusCounts = useMemo(() => {
-    if (!statusFilterConfig) return new Map();
-    const statusColumn = table.getColumn(statusFilterConfig.columnId);
-    if (!statusColumn) return new Map();
-    return statusColumn.getFacetedUniqueValues();
-  }, [
-    statusFilterConfig,
-    statusFilterConfig
-      ? table.getColumn(statusFilterConfig.columnId)?.getFacetedUniqueValues()
-      : null,
-  ]);
-
-  const selectedStatuses = useMemo(() => {
-    if (!statusFilterConfig) return [];
-    const filterValue = table
-      .getColumn(statusFilterConfig.columnId)
-      ?.getFilterValue() as string[];
-    return filterValue ?? [];
-  }, [
-    statusFilterConfig,
-    statusFilterConfig
-      ? table.getColumn(statusFilterConfig.columnId)?.getFilterValue()
-      : null,
-  ]);
-
-  const handleStatusChange = (checked: boolean, value: string) => {
-    if (!statusFilterConfig) return;
-    const filterValue = table
-      .getColumn(statusFilterConfig.columnId)
-      ?.getFilterValue() as string[];
-    const newFilterValue = filterValue ? [...filterValue] : [];
-
-    if (checked) {
-      newFilterValue.push(value);
-    } else {
-      const index = newFilterValue.indexOf(value);
-      if (index > -1) {
-        newFilterValue.splice(index, 1);
-      }
-    }
-
-    table
-      .getColumn(statusFilterConfig.columnId)
-      ?.setFilterValue(newFilterValue.length ? newFilterValue : undefined);
-  };
-
   return (
     <div className="space-y-4">
       {/* Filters */}
@@ -454,56 +390,6 @@ export default function DataTable<TData>({
               title="Filters"
               description="Customize your filters to find exactly what you're looking for."
             />
-          )}
-
-          {/* Legacy Status filter (for backward compatibility) */}
-          {!filters && statusFilterConfig && (
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline">
-                  <FilterIcon
-                    className="-ms-1 opacity-60"
-                    size={16}
-                    aria-hidden="true"
-                  />
-                  {statusFilterConfig.columnId}
-                  {selectedStatuses.length > 0 && (
-                    <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                      {selectedStatuses.length}
-                    </span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto min-w-36 p-3" align="start">
-                <div className="space-y-3">
-                  <div className="text-muted-foreground text-xs font-medium">
-                    Filters
-                  </div>
-                  <div className="space-y-3">
-                    {uniqueStatusValues.map((value, i) => (
-                      <div key={value} className="flex items-center gap-2">
-                        <Checkbox
-                          id={`${id}-${i}`}
-                          checked={selectedStatuses.includes(value)}
-                          onCheckedChange={(checked: boolean) =>
-                            handleStatusChange(checked, value)
-                          }
-                        />
-                        <Label
-                          htmlFor={`${id}-${i}`}
-                          className="flex grow justify-between gap-2 font-normal"
-                        >
-                          {value}{" "}
-                          <span className="text-muted-foreground ms-2 text-xs">
-                            {statusCounts.get(value)}
-                          </span>
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </PopoverContent>
-            </Popover>
           )}
 
           {/* Toggle columns visibility */}
