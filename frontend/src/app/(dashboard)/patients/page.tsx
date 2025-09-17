@@ -2,7 +2,7 @@
 
 import { StatsCardProps, StatsGrid } from "@/components/StatesGrid";
 import DataTable from "@/components/DataTable";
-import { usePatientsTable } from "@/hooks/patient_hooks/usePatientsTable";
+import { usePatientsTable } from "@/app/(dashboard)/patients/(hooks)/usePatientsTable";
 
 const stats: StatsCardProps[] = [
   {

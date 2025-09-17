@@ -2,7 +2,7 @@
 
 import { usePatients } from "./usePatients";
 import { DataTableProps } from "@/components/DataTable";
-import { Patient } from "@/types/patient";
+import { Patient } from "@/app/(dashboard)/patients/(types)/patient";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import {

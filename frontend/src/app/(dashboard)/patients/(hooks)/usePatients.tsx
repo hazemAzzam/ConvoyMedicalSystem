@@ -1,6 +1,6 @@
 "use client";
 
-import { getPatients } from "@/services/patientQueries";
+import { getPatients } from "@/app/(dashboard)/patients/(services)/patientQueries";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
