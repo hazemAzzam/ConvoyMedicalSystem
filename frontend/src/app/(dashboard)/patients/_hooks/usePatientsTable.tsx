@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  useDeletePatient,
-  useDeletePatients,
-  usePatients,
-} from "./usePatients";
+import { usePatients } from "./usePatients";
 import { DataTableProps } from "@/components/DataTable";
 import { Patient } from "@/app/(dashboard)/patients/_types/patient";
 import { ColumnDef, Row } from "@tanstack/react-table";
@@ -23,11 +19,11 @@ import { FilterConfig } from "@/components/FilterSidebar";
 import { Calendar } from "lucide-react";
 import { toast } from "sonner";
 import { showAlert } from "@/hooks/use-alert-store";
+import { useDeletePatient, useDeletePatients } from "./usePatientsMutations";
+import { useQueryClient } from "@tanstack/react-query";
 
 // Patient columns definition factory
-export const createPatientColumns = (
-  deletePatient: (id: string) => void,
-): ColumnDef<Patient>[] => [
+export const createPatientColumns = (): ColumnDef<Patient>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -97,21 +93,15 @@ export const createPatientColumns = (
   {
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,
-    cell: ({ row }) => <PatientRowActions row={row} onDelete={deletePatient} />,
+    cell: ({ row }) => <PatientRowActions row={row} />,
     size: 60,
     enableHiding: false,
   },
 ];
 
 // Custom row actions component for patients
-export function PatientRowActions({
-  row,
-  onDelete,
-}: {
-  row: Row<Patient>;
-  onDelete: (id: string) => void;
-}) {
-  const deletePatientMutation = useDeletePatient();
+export function PatientRowActions({ row }: { row: Row<Patient> }) {
+  const queryClient = useQueryClient();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -147,7 +137,16 @@ export function PatientRowActions({
               title: "Delete Patient",
               description: "Are you sure you want to delete this patient?",
               onConfirm: () => {
-                deletePatientMutation.mutate(row.original.id);
+                useDeletePatient(row.original.id)
+                  .then(() => {
+                    toast.success("Patient deleted successfully");
+                    queryClient.invalidateQueries({ queryKey: ["patients"] });
+                  })
+                  .catch((error) => {
+                    toast.error("Failed to delete patient", {
+                      description: error.message,
+                    });
+                  });
               },
             });
           }}
@@ -183,10 +182,8 @@ export const patientFilters: FilterConfig[] = [
 
 export const usePatientsTable = () => {
   const { data: patients, isLoading, error } = usePatients();
-  const deletePatientMutation = useDeletePatient();
-  const deletePatientsMutation = useDeletePatients();
-
-  const patientColumns = createPatientColumns(deletePatientMutation.mutate);
+  const queryClient = useQueryClient();
+  const patientColumns = createPatientColumns();
 
   const handleAddPatient = () => {
     console.log("Add patient clicked");
@@ -196,13 +193,16 @@ export const usePatientsTable = () => {
   const handleDeletePatients = (selectedRows: any[]) => {
     const patientIds = selectedRows.map((row) => row.original.id);
 
-    deletePatientsMutation.mutate(patientIds);
-
-    if (deletePatientsMutation.isSuccess) {
-      toast.success("Patients deleted successfully", {
-        description: `${patientIds.length} patients deleted successfully`,
+    useDeletePatients(patientIds)
+      .then(() => {
+        toast.success("Patients deleted successfully");
+        queryClient.invalidateQueries({ queryKey: ["patients"] });
+      })
+      .catch((error) => {
+        toast.error("Failed to delete patients", {
+          description: error.message,
+        });
       });
-    }
   };
 
   const tableConfig: DataTableProps<Patient> = {
