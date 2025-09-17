@@ -1,13 +1,14 @@
 import { ComponentProps } from "react";
-import { Input } from "./ui/input";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
-import { Label } from "./ui/label";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 type ControlledInputProps<T extends FieldValues> = {
   name: Path<T>;
   label?: string;
   containerClassName?: string;
+  options?: { value: string; label: string }[];
 } & ComponentProps<typeof Input>;
 
 const ControlledInput = <T extends FieldValues>({
@@ -20,9 +21,9 @@ const ControlledInput = <T extends FieldValues>({
 }: ControlledInputProps<T>) => {
   const { control } = useFormContext<T>();
   return (
-    <div className={cn("w-full", containerClassName)}>
+    <div className={cn("min-w-[150px] flex-1", containerClassName)}>
       {!!label && (
-        <Label htmlFor={name} className="mb-2">
+        <Label htmlFor={name} className="mb-4">
           {label}
         </Label>
       )}
@@ -37,6 +38,7 @@ const ControlledInput = <T extends FieldValues>({
               id={name}
               data-slot="input"
               {...field}
+              value={field.value || ""}
               {...props}
               aria-invalid={!!error}
             />

@@ -10,7 +10,7 @@ export const getPatients = async () => {
 
 export const deletePatient = async (patientId: string) => {
   const response = await apiClient.delete(
-    `${API_ROUTES.PATIENTS.DELETE}/${patientId}`,
+    `${API_ROUTES.PATIENTS.DELETE}/${patientId}/`,
   );
   return response.data;
 };

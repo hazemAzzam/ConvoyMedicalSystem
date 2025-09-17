@@ -1,0 +1,213 @@
+import React from "react";
+import {
+  CreateAdultType,
+  DEFAULT_ADULT_VALUES,
+  FORM_OPTIONS,
+  GENDERS,
+} from "../../_types/patientSchema";
+import { Accordion as AccordionPrimitive } from "radix-ui";
+import { Form, FormProvider, useForm, useFormContext } from "react-hook-form";
+
+import {
+  Accordion,
+  AccordionItem,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import { PlusIcon } from "lucide-react";
+import { ControlledSelect } from "@/components/controlled/controlled-select";
+import { ControlledInput } from "@/components/controlled/controlled-input";
+import { ControlledOTP } from "@/components/controlled/controlled-otp";
+import { ControlledRadioGroup } from "@/components/controlled/controlled-radio-group";
+import { useCreateAdult } from "../../_hooks/usePatientsMutations";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CreateAdultSchema } from "../../_types/patientSchema";
+import { cn } from "@/lib/utils";
+
+function Row({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex w-full flex-wrap gap-4", className)}>
+      {children}
+    </div>
+  );
+}
+
+export default function AdultForm() {
+  const form = useForm<CreateAdultType>({
+    defaultValues: DEFAULT_ADULT_VALUES,
+    resolver: zodResolver(CreateAdultSchema) as any,
+  });
+  const createAdultMutation = useCreateAdult();
+
+  const onSubmit = async (data: CreateAdultType) => {
+    try {
+      const adultData = await createAdultMutation.mutateAsync(
+        data as CreateAdultType,
+      );
+      toast.success("Patient created successfully");
+      form.reset();
+    } catch (error) {
+      toast.error("Failed to create patient");
+    }
+  };
+
+  return (
+    <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <FormProvider {...form}>
+        <div className="flex flex-col gap-4 rounded-md">
+          <Accordion type="multiple" className="space-y-4">
+            <AccordionItem
+              value="basic-info"
+              className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+            >
+              <AccordionPrimitive.Header className="w-full rounded-md border-b">
+                <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-2">
+                  <h2 className="font-medium">Basic Info</h2>
+                  <PlusIcon
+                    size={16}
+                    className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+                    aria-hidden="true"
+                  />
+                </AccordionPrimitive.Trigger>
+              </AccordionPrimitive.Header>
+
+              <AccordionContent className="flex gap-4 p-2">
+                <Row>
+                  <ControlledInput<CreateAdultType> name="code" label="Code" />
+                  <ControlledInput<CreateAdultType>
+                    name="house_number"
+                    label="House Number"
+                  />
+                </Row>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem
+              value="personal-info"
+              className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+            >
+              <AccordionPrimitive.Header className="w-full rounded-md border-b">
+                <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-2">
+                  <h2 className="font-medium">Personal Info</h2>
+                  <PlusIcon
+                    size={16}
+                    className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+                    aria-hidden="true"
+                  />
+                </AccordionPrimitive.Trigger>
+              </AccordionPrimitive.Header>
+
+              <AccordionContent className="flex flex-col gap-4 p-2">
+                <Row>
+                  <ControlledInput<CreateAdultType> name="name" label="Name" />
+                  <ControlledSelect<CreateAdultType>
+                    name="gender"
+                    label="Gender"
+                    options={[...FORM_OPTIONS.genders]}
+                  />
+                  <ControlledInput<CreateAdultType> name="age" label="Age" />
+                  <ControlledInput<CreateAdultType>
+                    name="occupation"
+                    label="Occupation"
+                  />
+                </Row>
+                <Row className="flex-col md:flex-row">
+                  <ControlledOTP<CreateAdultType>
+                    name="mobile_number"
+                    label="Mobile Number"
+                    length={11}
+                    maxLength={11}
+                  />
+                  <ControlledRadioGroup<CreateAdultType>
+                    name="marital_status"
+                    label="Marital Status"
+                    options={[...FORM_OPTIONS.maritalStatuses]}
+                    orientation="horizontal"
+                  />
+                </Row>
+                {form.watch("marital_status") !== "single" && (
+                  <Row>
+                    <ControlledInput<CreateAdultType>
+                      name="children_number"
+                      label="Children Number"
+                    />
+                    <ControlledInput<CreateAdultType>
+                      name="age_of_the_youngest"
+                      label="Age of the Youngest"
+                    />
+                  </Row>
+                )}
+                <Row>
+                  <ControlledRadioGroup<CreateAdultType>
+                    name="education_level"
+                    label="Education Level"
+                    options={[...FORM_OPTIONS.educationLevels]}
+                    orientation="horizontal"
+                  />
+                </Row>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem
+              value="smoking-habits"
+              className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+            >
+              <AccordionPrimitive.Header className="w-full rounded-md border-b">
+                <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-2">
+                  <h2 className="font-medium">Habits of Medical Importance</h2>
+                  <PlusIcon
+                    size={16}
+                    className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+                    aria-hidden="true"
+                  />
+                </AccordionPrimitive.Trigger>
+              </AccordionPrimitive.Header>
+
+              <AccordionContent className="flex flex-col gap-4 p-2">
+                <Row>
+                  <ControlledRadioGroup<CreateAdultType>
+                    name="smoking"
+                    label="Smoking"
+                    options={[...FORM_OPTIONS.smoking]}
+                    orientation="horizontal"
+                  />
+                  {form.watch("smoking") === "true" && (
+                    <>
+                      <ControlledInput<CreateAdultType>
+                        name="smoking_rate"
+                        label="Smoking Rate"
+                      />
+                      <ControlledInput<CreateAdultType>
+                        name="smoking_type"
+                        label="Smoking Type"
+                      />
+                      <ControlledInput<CreateAdultType>
+                        name="other_smoking"
+                        label="Smoking Other"
+                      />
+                    </>
+                  )}
+                </Row>
+              </AccordionContent>
+            </AccordionItem>
+
+            <div className="flex justify-end">
+              <Button type="submit" disabled={createAdultMutation.isPending}>
+                {createAdultMutation.isPending
+                  ? "Creating..."
+                  : "Create Patient"}
+              </Button>
+            </div>
+          </Accordion>
+        </div>
+      </FormProvider>
+    </form>
+  );
+}

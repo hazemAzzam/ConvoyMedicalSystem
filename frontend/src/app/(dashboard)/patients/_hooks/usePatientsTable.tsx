@@ -175,13 +175,11 @@ export const patientFilters: FilterConfig[] = [
 
 export const usePatientsTable = () => {
   const { data: patients, isLoading, error } = usePatients();
-  const queryClient = useQueryClient();
   const patientColumns = createPatientColumns();
   const deletePatientsMutation = useDeletePatients();
   const router = useRouter();
 
   const handleAddPatient = () => {
-    console.log("Add patient clicked");
     router.push("/patients/add");
   };
 

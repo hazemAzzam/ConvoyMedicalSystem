@@ -51,23 +51,29 @@ export const AdultFieldsSchema = z.object({
   // Basic info
   occupation: z.string().min(1, "Occupation is required"),
   marital_status: z.enum(MARITAL_STATUSES),
-  children_number: z
+  children_number: z.coerce
     .number()
     .int()
-    .min(0, "Children number cannot be negative"),
-  age_of_the_youngest: z
+    .min(0, "Children number cannot be negative")
+    .nullable()
+    .optional(),
+  age_of_the_youngest: z.coerce
     .number()
     .int()
-    .min(0, "Age of youngest child cannot be negative"),
+    .min(0, "Age of youngest child cannot be negative")
+    .nullable()
+    .optional(),
   education_level: z.enum(EDUCATION_LEVELS),
-  age: z
+  age: z.coerce
     .number()
     .int()
     .min(0, "Age cannot be negative")
-    .max(150, "Age seems unrealistic"),
+    .max(150, "Age seems unrealistic")
+    .nullable()
+    .optional(),
 
   // Smoking habits
-  smoking: z.boolean().default(false),
+  smoking: z.string().default("false"),
   smoking_rate: z.string().nullable().optional(),
   smoking_type: z.string().nullable().optional(),
   other_smoking: z.string().nullable().optional(),
@@ -178,13 +184,13 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
   // Adult-specific fields
   occupation: "",
   marital_status: "single",
-  children_number: 0,
-  age_of_the_youngest: 0,
+  children_number: null,
+  age_of_the_youngest: null,
   education_level: "primary",
-  age: 0,
+  age: null,
 
   // Smoking habits
-  smoking: false,
+  smoking: "false",
   smoking_rate: null,
   smoking_type: null,
   other_smoking: null,
@@ -282,6 +288,10 @@ export const FORM_OPTIONS = {
   surgicals: [
     { value: "icu", label: "ICU" },
     { value: "operation", label: "Operation" },
+  ],
+  smoking: [
+    { value: "false", label: "No" },
+    { value: "true", label: "Yes" },
   ],
 } as const;
 
