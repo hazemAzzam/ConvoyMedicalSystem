@@ -208,11 +208,35 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "reverse",
         "importPath": "django.urls",
         "description": "django.urls",
         "isExtraImport": true,
         "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "DefaultRouter",
+        "importPath": "rest_framework.routers",
+        "description": "rest_framework.routers",
+        "isExtraImport": true,
+        "detail": "rest_framework.routers",
         "documentation": {}
     },
     {
@@ -245,14 +269,6 @@
         "description": "rest_framework_simplejwt.views",
         "isExtraImport": true,
         "detail": "rest_framework_simplejwt.views",
-        "documentation": {}
-    },
-    {
-        "label": "render",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
-        "isExtraImport": true,
-        "detail": "django.shortcuts",
         "documentation": {}
     },
     {
@@ -379,27 +395,27 @@
         "documentation": {}
     },
     {
-        "label": "PageNumberPagination",
-        "importPath": "rest_framework.pagination",
-        "description": "rest_framework.pagination",
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
         "isExtraImport": true,
-        "detail": "rest_framework.pagination",
+        "detail": "rest_framework",
         "documentation": {}
     },
     {
-        "label": "Response",
-        "importPath": "rest_framework.response",
-        "description": "rest_framework.response",
+        "label": "viewsets",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
         "isExtraImport": true,
-        "detail": "rest_framework.response",
+        "detail": "rest_framework",
         "documentation": {}
     },
     {
-        "label": "Response",
-        "importPath": "rest_framework.response",
-        "description": "rest_framework.response",
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
         "isExtraImport": true,
-        "detail": "rest_framework.response",
+        "detail": "rest_framework",
         "documentation": {}
     },
     {
@@ -443,6 +459,46 @@
         "documentation": {}
     },
     {
+        "label": "action",
+        "importPath": "rest_framework.decorators",
+        "description": "rest_framework.decorators",
+        "isExtraImport": true,
+        "detail": "rest_framework.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "DjangoFilterBackend",
+        "importPath": "django_filters.rest_framework",
+        "description": "django_filters.rest_framework",
+        "isExtraImport": true,
+        "detail": "django_filters.rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "DjangoFilterBackend",
         "importPath": "django_filters.rest_framework",
         "description": "django_filters.rest_framework",
@@ -464,6 +520,30 @@
         "description": "rest_framework.filters",
         "isExtraImport": true,
         "detail": "rest_framework.filters",
+        "documentation": {}
+    },
+    {
+        "label": "SearchFilter",
+        "importPath": "rest_framework.filters",
+        "description": "rest_framework.filters",
+        "isExtraImport": true,
+        "detail": "rest_framework.filters",
+        "documentation": {}
+    },
+    {
+        "label": "OrderingFilter",
+        "importPath": "rest_framework.filters",
+        "description": "rest_framework.filters",
+        "isExtraImport": true,
+        "detail": "rest_framework.filters",
+        "documentation": {}
+    },
+    {
+        "label": "PageNumberPagination",
+        "importPath": "rest_framework.pagination",
+        "description": "rest_framework.pagination",
+        "isExtraImport": true,
+        "detail": "rest_framework.pagination",
         "documentation": {}
     },
     {
@@ -889,7 +969,7 @@
         "kind": 5,
         "importPath": "backend.bedaya_medical_system.urls",
         "description": "backend.bedaya_medical_system.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(\"api/auth/\", include(\"accounts.urls\")),\n    path(\"api/patients/\", include(\"patients.urls\")),\n]\n# Serve media files in development\nif settings.DEBUG:\n    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
+        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(\"api/auth/\", include(\"accounts.urls\")),\n    path(\"api/patients/\", include(\"patients.urls\")),\n    path(\"api/\", include(\"others.urls\")),\n]\n# Serve media files in development\nif settings.DEBUG:\n    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
         "detail": "backend.bedaya_medical_system.urls",
         "documentation": {}
     },
@@ -909,6 +989,60 @@
         "description": "backend.others.migrations.0001_initial",
         "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = []\n    operations = [\n        migrations.CreateModel(\n            name=\"ClinicModel\",\n            fields=[\n                (\n                    \"id\",\n                    models.BigAutoField(",
         "detail": "backend.others.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "FamilyHistoryAdmin",
+        "kind": 6,
+        "importPath": "backend.others.admin",
+        "description": "backend.others.admin",
+        "peekOfCode": "class FamilyHistoryAdmin(admin.ModelAdmin):\n    list_display = ['name', 'created_on', 'updated_on']\n    list_filter = ['created_on', 'updated_on']\n    search_fields = ['name']\n    readonly_fields = ['id', 'created_on', 'updated_on']\n@admin.register(MedicalModel)\nclass MedicalAdmin(admin.ModelAdmin):\n    list_display = ['name', 'created_on', 'updated_on']\n    list_filter = ['created_on', 'updated_on']\n    search_fields = ['name']",
+        "detail": "backend.others.admin",
+        "documentation": {}
+    },
+    {
+        "label": "MedicalAdmin",
+        "kind": 6,
+        "importPath": "backend.others.admin",
+        "description": "backend.others.admin",
+        "peekOfCode": "class MedicalAdmin(admin.ModelAdmin):\n    list_display = ['name', 'created_on', 'updated_on']\n    list_filter = ['created_on', 'updated_on']\n    search_fields = ['name']\n    readonly_fields = ['id', 'created_on', 'updated_on']\n@admin.register(CyanosisModel)\nclass CyanosisAdmin(admin.ModelAdmin):\n    list_display = ['name', 'created_on', 'updated_on']\n    list_filter = ['created_on', 'updated_on']\n    search_fields = ['name']",
+        "detail": "backend.others.admin",
+        "documentation": {}
+    },
+    {
+        "label": "CyanosisAdmin",
+        "kind": 6,
+        "importPath": "backend.others.admin",
+        "description": "backend.others.admin",
+        "peekOfCode": "class CyanosisAdmin(admin.ModelAdmin):\n    list_display = ['name', 'created_on', 'updated_on']\n    list_filter = ['created_on', 'updated_on']\n    search_fields = ['name']\n    readonly_fields = ['id', 'created_on', 'updated_on']\n@admin.register(DrugModel)\nclass DrugAdmin(admin.ModelAdmin):\n    list_display = ['name', 'created_on', 'updated_on']\n    list_filter = ['created_on', 'updated_on']\n    search_fields = ['name']",
+        "detail": "backend.others.admin",
+        "documentation": {}
+    },
+    {
+        "label": "DrugAdmin",
+        "kind": 6,
+        "importPath": "backend.others.admin",
+        "description": "backend.others.admin",
+        "peekOfCode": "class DrugAdmin(admin.ModelAdmin):\n    list_display = ['name', 'created_on', 'updated_on']\n    list_filter = ['created_on', 'updated_on']\n    search_fields = ['name']\n    readonly_fields = ['id', 'created_on', 'updated_on']\n@admin.register(ClinicModel)\nclass ClinicAdmin(admin.ModelAdmin):\n    list_display = ['name', 'description']\n    search_fields = ['name', 'description']\n@admin.register(SymptomModel)",
+        "detail": "backend.others.admin",
+        "documentation": {}
+    },
+    {
+        "label": "ClinicAdmin",
+        "kind": 6,
+        "importPath": "backend.others.admin",
+        "description": "backend.others.admin",
+        "peekOfCode": "class ClinicAdmin(admin.ModelAdmin):\n    list_display = ['name', 'description']\n    search_fields = ['name', 'description']\n@admin.register(SymptomModel)\nclass SymptomAdmin(admin.ModelAdmin):\n    list_display = ['name', 'clinic', 'created_on', 'updated_on']\n    list_filter = ['clinic', 'created_on', 'updated_on']\n    search_fields = ['name', 'description', 'clinic__name']\n    readonly_fields = ['id', 'created_on', 'updated_on']\n    list_select_related = ['clinic']",
+        "detail": "backend.others.admin",
+        "documentation": {}
+    },
+    {
+        "label": "SymptomAdmin",
+        "kind": 6,
+        "importPath": "backend.others.admin",
+        "description": "backend.others.admin",
+        "peekOfCode": "class SymptomAdmin(admin.ModelAdmin):\n    list_display = ['name', 'clinic', 'created_on', 'updated_on']\n    list_filter = ['clinic', 'created_on', 'updated_on']\n    search_fields = ['name', 'description', 'clinic__name']\n    readonly_fields = ['id', 'created_on', 'updated_on']\n    list_select_related = ['clinic']",
+        "detail": "backend.others.admin",
         "documentation": {}
     },
     {
@@ -972,6 +1106,186 @@
         "description": "backend.others.models",
         "peekOfCode": "class SymptomModel(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    name = models.CharField(_(\"Symptom Name\"), max_length=255)\n    description = models.TextField(_(\"Symptom Description\"), null=True, blank=True)\n    clinic = models.ForeignKey(\"ClinicModel\", verbose_name=_(\"Clinic\"), on_delete=models.PROTECT)\n    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n    updated_on = models.DateTimeField(auto_now=True, null=True, blank=True)\n    class Meta:\n        verbose_name = _(\"Symptom\")\n        verbose_name_plural = _(\"Symptoms\")",
         "detail": "backend.others.models",
+        "documentation": {}
+    },
+    {
+        "label": "FamilyHistorySerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class FamilyHistorySerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for FamilyHistoryModel\"\"\"\n    class Meta:\n        model = FamilyHistoryModel\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_on', 'updated_on']\n    def validate_name(self, value):\n        \"\"\"Validate name\"\"\"\n        if not value or not value.strip():\n            raise serializers.ValidationError(\"Name is required.\")",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "FamilyHistoryAutocompleteSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class FamilyHistoryAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = FamilyHistoryModel\n        fields = ['id', 'name']\nclass MedicalSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for MedicalModel\"\"\"\n    class Meta:\n        model = MedicalModel\n        fields = \"__all__\"",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "MedicalSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class MedicalSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for MedicalModel\"\"\"\n    class Meta:\n        model = MedicalModel\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_on', 'updated_on']\n    def validate_name(self, value):\n        \"\"\"Validate name\"\"\"\n        if not value or not value.strip():\n            raise serializers.ValidationError(\"Name is required.\")",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "MedicalAutocompleteSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class MedicalAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = MedicalModel\n        fields = ['id', 'name']\nclass CyanosisSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for CyanosisModel\"\"\"\n    class Meta:\n        model = CyanosisModel\n        fields = \"__all__\"",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "CyanosisSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class CyanosisSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for CyanosisModel\"\"\"\n    class Meta:\n        model = CyanosisModel\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_on', 'updated_on']\n    def validate_name(self, value):\n        \"\"\"Validate name\"\"\"\n        if not value or not value.strip():\n            raise serializers.ValidationError(\"Name is required.\")",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "CyanosisAutocompleteSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class CyanosisAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = CyanosisModel\n        fields = ['id', 'name']\nclass DrugSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for DrugModel\"\"\"\n    class Meta:\n        model = DrugModel\n        fields = \"__all__\"",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "DrugSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class DrugSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for DrugModel\"\"\"\n    class Meta:\n        model = DrugModel\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_on', 'updated_on']\n    def validate_name(self, value):\n        \"\"\"Validate name\"\"\"\n        if not value or not value.strip():\n            raise serializers.ValidationError(\"Name is required.\")",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "DrugAutocompleteSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class DrugAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = DrugModel\n        fields = ['id', 'name']\nclass ClinicSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for ClinicModel\"\"\"\n    class Meta:\n        model = ClinicModel\n        fields = \"__all__\"",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "ClinicSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class ClinicSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for ClinicModel\"\"\"\n    class Meta:\n        model = ClinicModel\n        fields = \"__all__\"\n    def validate_name(self, value):\n        \"\"\"Validate name\"\"\"\n        if not value or not value.strip():\n            raise serializers.ValidationError(\"Name is required.\")\n        if len(value.strip()) < 2:",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "ClinicAutocompleteSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class ClinicAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = ClinicModel\n        fields = ['id', 'name']\nclass SymptomSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for SymptomModel\"\"\"\n    clinic_name = serializers.CharField(source='clinic.name', read_only=True)\n    class Meta:\n        model = SymptomModel",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "SymptomSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class SymptomSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for SymptomModel\"\"\"\n    clinic_name = serializers.CharField(source='clinic.name', read_only=True)\n    class Meta:\n        model = SymptomModel\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_on', 'updated_on']\n    def validate_name(self, value):\n        \"\"\"Validate name\"\"\"\n        if not value or not value.strip():",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "SymptomAutocompleteSerializer",
+        "kind": 6,
+        "importPath": "backend.others.serializers",
+        "description": "backend.others.serializers",
+        "peekOfCode": "class SymptomAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    clinic_name = serializers.CharField(source='clinic.name', read_only=True)\n    class Meta:\n        model = SymptomModel\n        fields = ['id', 'name', 'clinic_name']",
+        "detail": "backend.others.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.others.urls",
+        "description": "backend.others.urls",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r'family-history', FamilyHistoryViewSet, basename='family-history')\nrouter.register(r'medical', MedicalViewSet, basename='medical')\nrouter.register(r'cyanosis', CyanosisViewSet, basename='cyanosis')\nrouter.register(r'drugs', DrugViewSet, basename='drugs')\nrouter.register(r'clinics', ClinicViewSet, basename='clinics')\nrouter.register(r'symptoms', SymptomViewSet, basename='symptoms')\nurlpatterns = [\n    path('', include(router.urls)),\n]",
+        "detail": "backend.others.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "backend.others.urls",
+        "description": "backend.others.urls",
+        "peekOfCode": "urlpatterns = [\n    path('', include(router.urls)),\n]",
+        "detail": "backend.others.urls",
+        "documentation": {}
+    },
+    {
+        "label": "FamilyHistoryViewSet",
+        "kind": 6,
+        "importPath": "backend.others.views",
+        "description": "backend.others.views",
+        "peekOfCode": "class FamilyHistoryViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for FamilyHistoryModel with autocomplete functionality\n    \"\"\"\n    queryset = FamilyHistoryModel.objects.all()\n    serializer_class = FamilyHistorySerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name']\n    ordering_fields = ['name', 'created_on', 'updated_on']\n    ordering = ['-created_on']",
+        "detail": "backend.others.views",
+        "documentation": {}
+    },
+    {
+        "label": "MedicalViewSet",
+        "kind": 6,
+        "importPath": "backend.others.views",
+        "description": "backend.others.views",
+        "peekOfCode": "class MedicalViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for MedicalModel with autocomplete functionality\n    \"\"\"\n    queryset = MedicalModel.objects.all()\n    serializer_class = MedicalSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name']\n    ordering_fields = ['name', 'created_on', 'updated_on']\n    ordering = ['-created_on']",
+        "detail": "backend.others.views",
+        "documentation": {}
+    },
+    {
+        "label": "CyanosisViewSet",
+        "kind": 6,
+        "importPath": "backend.others.views",
+        "description": "backend.others.views",
+        "peekOfCode": "class CyanosisViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for CyanosisModel with autocomplete functionality\n    \"\"\"\n    queryset = CyanosisModel.objects.all()\n    serializer_class = CyanosisSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name']\n    ordering_fields = ['name', 'created_on', 'updated_on']\n    ordering = ['-created_on']",
+        "detail": "backend.others.views",
+        "documentation": {}
+    },
+    {
+        "label": "DrugViewSet",
+        "kind": 6,
+        "importPath": "backend.others.views",
+        "description": "backend.others.views",
+        "peekOfCode": "class DrugViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for DrugModel with autocomplete functionality\n    \"\"\"\n    queryset = DrugModel.objects.all()\n    serializer_class = DrugSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name']\n    ordering_fields = ['name', 'created_on', 'updated_on']\n    ordering = ['-created_on']",
+        "detail": "backend.others.views",
+        "documentation": {}
+    },
+    {
+        "label": "ClinicViewSet",
+        "kind": 6,
+        "importPath": "backend.others.views",
+        "description": "backend.others.views",
+        "peekOfCode": "class ClinicViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for ClinicModel with autocomplete functionality\n    \"\"\"\n    queryset = ClinicModel.objects.all()\n    serializer_class = ClinicSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name', 'description']\n    ordering_fields = ['name']\n    ordering = ['name']",
+        "detail": "backend.others.views",
+        "documentation": {}
+    },
+    {
+        "label": "SymptomViewSet",
+        "kind": 6,
+        "importPath": "backend.others.views",
+        "description": "backend.others.views",
+        "peekOfCode": "class SymptomViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    ViewSet for SymptomModel with autocomplete functionality\n    \"\"\"\n    queryset = SymptomModel.objects.select_related('clinic').all()\n    serializer_class = SymptomSerializer\n    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]\n    search_fields = ['name', 'description', 'clinic__name']\n    ordering_fields = ['name', 'clinic__name', 'created_on', 'updated_on']\n    ordering = ['-created_on']",
+        "detail": "backend.others.views",
         "documentation": {}
     },
     {
