@@ -3,9 +3,55 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from .models import Adult
-from .serializers import AdultSerializer, AdultAutocompleteSerializer
+from .models import Patient, Adult
+from .serializers import PatientSerializer, PatientAutocompleteSerializer, AdultSerializer, AdultAutocompleteSerializer
 from .pagination import CustomPageNumberPagination
+
+
+class PatientViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for Patient model with autocomplete functionality
+    """
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    # pagination_class = CustomPageNumberPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ['name', 'mobile_number']
+    ordering_fields = ['name', 'created_at', 'updated_at']
+    ordering = ['-created_at']
+    
+    @action(detail=False, methods=['get'])
+    def autocomplete(self, request):
+        """
+        Autocomplete endpoint for patient search
+        Usage: /api/patients/autocomplete/?search=john
+        """
+        search_query = request.query_params.get('search', '')
+        limit = int(request.query_params.get('limit', 10))
+        
+        if not search_query:
+            return Response([])
+        
+        patients = Patient.objects.filter(
+            name__icontains=search_query
+        )[:limit]
+        
+        serializer = PatientAutocompleteSerializer(patients, many=True)
+        return Response(serializer.data)
+
+    # restore builk delete 
+    @action(detail=False, methods=['delete'])
+    def bulk_delete(self, request):
+        """
+        Bulk delete patients
+        Usage: /api/patients/bulk_delete/
+        Body: {
+            "patient_ids": ["1", "2", "3"]
+        }
+        """
+        patient_ids = request.data.get('patient_ids', [])
+        Patient.objects.filter(id__in=patient_ids).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT, data={'message': 'Patients deleted successfully'})
 
 
 class AdultViewSet(viewsets.ModelViewSet):
@@ -14,7 +60,7 @@ class AdultViewSet(viewsets.ModelViewSet):
     """
     queryset = Adult.objects.all()
     serializer_class = AdultSerializer
-    pagination_class = CustomPageNumberPagination
+    # pagination_class = CustomPageNumberPagination
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['name', 'mobile_number', 'occupation']
     ordering_fields = ['name', 'age', 'created_at', 'updated_at']

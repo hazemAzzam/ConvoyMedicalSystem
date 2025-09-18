@@ -39,31 +39,30 @@ SURGICALS = [
 
 class Patient(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    patient_type = models.CharField(max_length=20, choices=[('adult', 'Adult'), ('pediatric', 'Pediatric')])
+    patient_type = models.CharField(max_length=20, choices=[('adult', 'Adult'), ('pediatric', 'Pediatric')], default='adult')
     
-    code = models.CharField("Code", max_length=255, unique=True)
-    house_number = models.CharField("House Number", max_length=255)
+    code = models.CharField("Code", max_length=255, unique=True, default='')
+    house_number = models.CharField("House Number", max_length=255, default='')
 
-    name = models.CharField(max_length=200)
-    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')])
-    mobile_number = models.CharField(max_length=15)
+    name = models.CharField(max_length=200, default='')
+    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], default='male')
+    mobile_number = models.CharField(max_length=15, default='')
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        abstract = True
         ordering = ['-created_at']
     
     def __str__(self):
         return f"{self.name} ({self.mobile_number})"
 
 class Adult(Patient):
-    occupation = models.CharField(max_length=255)
-    marital_status = models.CharField(max_length=255, choices=[('married', 'Married'), ('single', 'Single'), ('divorced', 'Divorced'), ('widowed', 'Widowed')])
+    occupation = models.CharField(max_length=255, default='')
+    marital_status = models.CharField(max_length=255, choices=[('married', 'Married'), ('single', 'Single'), ('divorced', 'Divorced'), ('widowed', 'Widowed')], default='single')
     children_number = models.IntegerField(default=0)
     age_of_the_youngest = models.IntegerField(default=0)
-    education_level = models.CharField(max_length=255, choices=EDUCATION_LEVELS)
+    education_level = models.CharField(max_length=255, choices=EDUCATION_LEVELS, default='primary')
     age = models.IntegerField(default=0)
 
     # Hapits of medical importance

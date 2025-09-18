@@ -13,6 +13,8 @@ export const createAdultService = async (
   adult: CreateAdultType,
 ): Promise<AdultType> => {
   const response = await apiClient.post(API_ROUTES.ADULTS.CREATE, adult);
+
+  console.log("response", response);
   return response.data;
 };
 

@@ -6,7 +6,12 @@ def delete_files(base_dir):
     digit_pattern = re.compile(r'^\d{4}')
 
     # Delete sqllite3
-    os.remove(os.path.join(base_dir, 'BedayaSystem', 'db.sqlite3'))
+    db_path = os.path.join(base_dir, 'db.sqlite3')
+    if os.path.exists(db_path):
+        os.remove(db_path)
+        print(f"Deleted: {db_path}")
+    else:
+        print(f"Database file not found: {db_path}")
     
     for root, dirs, files in os.walk(base_dir):
         # Delete Python cache files

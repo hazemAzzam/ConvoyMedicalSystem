@@ -1,5 +1,41 @@
 from rest_framework import serializers
-from .models import Adult
+from .models import Patient, Adult
+
+
+class PatientSerializer(serializers.ModelSerializer):
+    """Full serializer for Patient model"""
+    
+    class Meta:
+        model = Patient
+        fields = "__all__"
+        read_only_fields = ['id', 'created_at', 'updated_at']
+    
+    def validate_mobile_number(self, value):
+        """Validate phone number format"""
+        if not value:
+            raise serializers.ValidationError("Mobile number is required.")
+        
+        if len(value) < 10:
+            raise serializers.ValidationError("Mobile number must be at least 10 digits.")
+        
+        return value
+    
+    def validate_name(self, value):
+        """Validate name"""
+        if not value or not value.strip():
+            raise serializers.ValidationError("Name is required.")
+        
+        if len(value.strip()) < 2:
+            raise serializers.ValidationError("Name must be at least 2 characters long.")
+        
+        return value.strip()
+
+
+class PatientAutocompleteSerializer(serializers.ModelSerializer):
+    """Serializer for autocomplete fields - minimal data"""
+    class Meta:
+        model = Patient
+        fields = ['id', 'name', 'mobile_number']
 
 
 class AdultSerializer(serializers.ModelSerializer):

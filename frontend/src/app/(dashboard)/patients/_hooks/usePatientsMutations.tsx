@@ -19,6 +19,8 @@ export const useCreateAdult = () => {
       toast.error("Failed to create adult", {
         description: error.message,
       });
+      console.log("error", error);
+      throw error;
     },
   });
 };

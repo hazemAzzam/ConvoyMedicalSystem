@@ -26,7 +26,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateAdultSchema } from "../_types/patientSchema";
 import { cn } from "@/lib/utils";
 import { useAdult } from "../_hooks/usePatients";
-import { UpdateAdult } from "../_types/patient";
 
 function Row({
   children,
@@ -86,10 +85,9 @@ export default function AdultForm({
         await createAdultMutation.mutateAsync(data as CreateAdultType);
         toast.success("Patient created successfully");
       }
+      form.reset();
     } catch (error) {
       toast.error("Failed to create patient");
-    } finally {
-      form.reset();
     }
   };
 

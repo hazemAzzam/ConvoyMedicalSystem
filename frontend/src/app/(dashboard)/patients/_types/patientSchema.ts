@@ -184,8 +184,8 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
   // Adult-specific fields
   occupation: "",
   marital_status: "single",
-  children_number: null,
-  age_of_the_youngest: null,
+  children_number: 0,
+  age_of_the_youngest: 0,
   education_level: "primary",
   age: null,
 
