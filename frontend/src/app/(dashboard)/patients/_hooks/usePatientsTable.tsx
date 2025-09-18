@@ -14,7 +14,14 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { EllipsisIcon, Filter, User } from "lucide-react";
+import {
+  EditIcon,
+  EllipsisIcon,
+  EyeIcon,
+  FileTextIcon,
+  Filter,
+  User,
+} from "lucide-react";
 import { FilterConfig } from "@/components/FilterSidebar";
 import { Calendar } from "lucide-react";
 import { toast } from "sonner";
@@ -104,6 +111,7 @@ export const createPatientColumns = (): ColumnDef<Patient>[] => [
 export function PatientRowActions({ row }: { row: Row<Patient> }) {
   const queryClient = useQueryClient();
   const deletePatientMutation = useDeletePatient();
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -121,15 +129,16 @@ export function PatientRowActions({ row }: { row: Row<Patient> }) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Patient Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => router.push(`/patients/edit/${row.original.id}`)}
+        >
+          <EyeIcon size={16} aria-hidden="true" />
           <span>View Details</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <span>Edit Patient</span>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <span>View Medical History</span>
+          <FileTextIcon size={16} aria-hidden="true" />
+          <span>Generate Report</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

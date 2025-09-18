@@ -14,11 +14,10 @@ export const usePatients = () => {
   return query;
 };
 
-export const useAdult = () => {
-  const { selectedPatientId } = usePatientStore();
+export const useAdult = (id: string) => {
   return useQuery({
-    queryKey: ["adult", selectedPatientId],
-    queryFn: () => getAdultService(selectedPatientId!),
-    enabled: !!selectedPatientId,
+    queryKey: ["adult", id],
+    queryFn: () => getAdultService(id),
+    enabled: !!id,
   });
 };

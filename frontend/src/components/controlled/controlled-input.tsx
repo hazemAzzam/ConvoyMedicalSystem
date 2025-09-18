@@ -23,7 +23,7 @@ const ControlledInput = <T extends FieldValues>({
   return (
     <div className={cn("min-w-[150px] flex-1", containerClassName)}>
       {!!label && (
-        <Label htmlFor={name} className="mb-4">
+        <Label htmlFor={name} className="space-y-2">
           {label}
         </Label>
       )}

@@ -73,11 +73,11 @@ export const AdultFieldsSchema = z.object({
     .optional(),
 
   // Smoking habits
-  smoking: z.string().default("false"),
+  smoking: z.string().default("no"),
   smoking_rate: z.string().nullable().optional(),
   smoking_type: z.string().nullable().optional(),
   other_smoking: z.string().nullable().optional(),
-  cessation: z.boolean().default(false),
+  cessation: z.string().default("no"),
   cessation_duration: z.string().nullable().optional(),
 
   // Menstruation (for females)
@@ -190,11 +190,11 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
   age: null,
 
   // Smoking habits
-  smoking: "false",
+  smoking: "no",
   smoking_rate: null,
   smoking_type: null,
   other_smoking: null,
-  cessation: false,
+  cessation: "no",
   cessation_duration: null,
 
   // Menstruation (for females)
@@ -290,8 +290,12 @@ export const FORM_OPTIONS = {
     { value: "operation", label: "Operation" },
   ],
   smoking: [
-    { value: "false", label: "No" },
-    { value: "true", label: "Yes" },
+    { value: "no", label: "No" },
+    { value: "yes", label: "Yes" },
+  ],
+  cessation: [
+    { value: "no", label: "No" },
+    { value: "yes", label: "Yes" },
   ],
 } as const;
 
@@ -303,6 +307,7 @@ export type PatientUnion = z.infer<typeof PatientUnionSchema>;
 
 export type CreatePatient = z.infer<typeof CreatePatientSchema>;
 export type CreateAdultType = z.infer<typeof CreateAdultSchema>;
+export type UpdateAdultType = z.infer<typeof AdultSchema>;
 export type CreatePediatricType = z.infer<typeof CreatePediatricSchema>;
 
 export type PatientAutocomplete = z.infer<typeof PatientAutocompleteSchema>;

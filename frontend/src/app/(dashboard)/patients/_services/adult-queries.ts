@@ -20,7 +20,7 @@ export const updateAdultService = async (
   adult: AdultType,
 ): Promise<AdultType> => {
   const response = await apiClient.put(
-    `${API_ROUTES.ADULTS.UPDATE}/${adult.id}`,
+    `${API_ROUTES.ADULTS.UPDATE}/${adult.id}/`,
     adult,
   );
   return response.data;

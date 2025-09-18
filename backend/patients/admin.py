@@ -1,22 +1,5 @@
 from django.contrib import admin
-from .models import Patient, Adult, Pediatric
-
-
-@admin.register(Patient)
-class PatientAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'code', 'house_number', 'mobile_number', 'gender', 'patient_type', 'created_at']
-    list_filter = ['created_at']
-    search_fields = ['name', 'mobile_number']
-    readonly_fields = ['id', 'created_at', 'updated_at']
-    fieldsets = (
-        ('Patient Information', {
-            'fields': ('patient_type', 'code', 'house_number', 'name', 'gender', 'mobile_number')
-        }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
-    )
+from .models import Adult, Pediatric
 
 @admin.register(Adult)
 class AdultAdmin(admin.ModelAdmin):

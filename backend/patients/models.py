@@ -52,6 +52,7 @@ class Patient(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
+        abstract = True
         ordering = ['-created_at']
     
     def __str__(self):
@@ -66,12 +67,12 @@ class Adult(Patient):
     age = models.IntegerField(default=0)
 
     # Hapits of medical importance
-    smoking = models.BooleanField("Smoking", default=False)
+    smoking = models.CharField("Smoking", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
     smoking_rate = models.CharField("Rate", max_length=255, null=True, blank=True)
     smoking_type = models.CharField("Type", max_length=255, null=True, blank=True)
     other_smoking = models.CharField("Other", max_length=255, null=True, blank=True)
 
-    cessation = models.BooleanField("Smoking Cessations", default=False)
+    cessation = models.CharField("Smoking Cessations", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
     cessation_duration = models.CharField("Duration", max_length=255, null=True, blank=True)
 
     menstruation = models.CharField("Menstruation", max_length=50, choices=MENSTRUATIONS, null=True, blank=True)
