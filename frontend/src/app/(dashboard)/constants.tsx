@@ -12,6 +12,10 @@ import {
   Clock,
   AlertCircle,
   Shield,
+  Heart,
+  Droplets,
+  Building2,
+  Zap,
 } from "lucide-react";
 import {
   FaUserMd,
@@ -49,7 +53,7 @@ export const ROUTE_GROUPS: RouteGroupType[] = [
   {
     group: "Clinics Management",
     routes: [
-      { href: "/clinics", label: "All Clinics", icon: <FaStethoscope /> },
+      { href: "/clinics", label: "All Clinics", icon: <Building2 /> },
       { href: "/clinics/doctors", label: "Doctors", icon: <FaUserMd /> },
       {
         href: "/clinics/specialties",
@@ -58,12 +62,23 @@ export const ROUTE_GROUPS: RouteGroupType[] = [
       },
     ],
   },
+
   {
     group: "Laboratory Management",
     routes: [
       { href: "/labs", label: "All Labs", icon: <Microscope /> },
       { href: "/labs/tests", label: "Lab Tests", icon: <FaFlask /> },
       { href: "/labs/technicians", label: "Technicians", icon: <MdScience /> },
+    ],
+  },
+  {
+    group: "Medical Data",
+    routes: [
+      { href: "/family-history", label: "Family History", icon: <FaDna /> },
+      { href: "/medicals", label: "Medicals", icon: <FaStethoscope /> },
+      { href: "/cyanosis", label: "Cyanosis", icon: <Droplets /> },
+      { href: "/drugs", label: "Drugs", icon: <Pill /> },
+      { href: "/symptoms", label: "Symptoms", icon: <Zap /> },
     ],
   },
   {

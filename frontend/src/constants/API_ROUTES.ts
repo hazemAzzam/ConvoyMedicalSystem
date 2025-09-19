@@ -6,8 +6,16 @@ export const API_ROUTES = {
     AUTOCOMPLETE: "/patients/patients/autocomplete/",
   },
   ADULTS: {
-    LIST: "/patients/adults/",
+    LIST: "/patients/adults",
     CREATE: "/patients/adults/",
-    UPDATE: "/patients/adults/",
+    UPDATE: "/patients/adults",
+  },
+  CLINICS: {
+    LIST: "/clinics",
+    CREATE: "/clinics",
+    UPDATE: "/clinics",
+    DELETE: "/clinics",
+    BULK_DELETE: "/clinics/bulk_delete/",
+    AUTOCOMPLETE: "/clinics/autocomplete/",
   },
 };

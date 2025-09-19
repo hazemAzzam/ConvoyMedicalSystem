@@ -1,3 +1,5 @@
+"use client";
+
 import { toast } from "sonner";
 import { deletePatient } from "../_services/patientQueries";
 import { deletePatients } from "../_services/patientQueries";
@@ -20,7 +22,6 @@ export const useCreateAdult = () => {
         description: error.message,
       });
       console.log("error", error);
-      throw error;
     },
   });
 };

@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import apiClient from "@/clients/apiClient";
 import { API_ROUTES } from "@/constants/API_ROUTES";
@@ -14,7 +14,7 @@ export const createAdultService = async (
 ): Promise<AdultType> => {
   const response = await apiClient.post(API_ROUTES.ADULTS.CREATE, adult);
 
-  console.log("response", response);
+  console.log("response", response.data);
   return response.data;
 };
 

@@ -26,6 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateAdultSchema } from "../_types/patientSchema";
 import { cn } from "@/lib/utils";
 import { useAdult } from "../_hooks/usePatients";
+import { getServerErrors } from "@/lib/getErrors";
 
 function Row({
   children,
@@ -88,6 +89,8 @@ export default function AdultForm({
       form.reset();
     } catch (error) {
       toast.error("Failed to create patient");
+
+      getServerErrors(error, form);
     }
   };
 
