@@ -21,7 +21,7 @@ const ControlledInput = <T extends FieldValues>({
 }: ControlledInputProps<T>) => {
   const { control } = useFormContext<T>();
   return (
-    <div className={cn("min-w-[150px] flex-1", containerClassName)}>
+    <div className={cn("min-w-[200px] flex-1", containerClassName)}>
       {!!label && (
         <Label htmlFor={name} className="space-y-2">
           {label}

@@ -30,7 +30,7 @@ const ControlledRadioGroup = <T extends FieldValues>({
   const { control } = useFormContext<T>();
 
   return (
-    <div className={cn("min-w-[150px] flex-1", containerClassName)}>
+    <div className={cn("min-w-[200px] flex-1", containerClassName)}>
       {!!label && <Label className="mb-2 block">{label}</Label>}
       <Controller
         name={name}

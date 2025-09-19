@@ -34,7 +34,7 @@ const ControlledSelect = <T extends FieldValues>({
 }: SelectProps<T>) => {
   const { control } = useFormContext<T>();
   return (
-    <div className="min-w-[150px] flex-1">
+    <div className="min-w-[200px] flex-1">
       {!!label && (
         <Label className="mb-2" htmlFor={name}>
           {label}

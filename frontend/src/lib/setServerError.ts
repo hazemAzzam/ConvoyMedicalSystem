@@ -1,6 +1,6 @@
 import { UseFormSetError, FieldValues, Path } from "react-hook-form";
 
-export const getServerErrors = <T extends FieldValues>(
+export const setServerErrors = <T extends FieldValues>(
   response: any,
   form: { setError: UseFormSetError<T> },
 ) => {

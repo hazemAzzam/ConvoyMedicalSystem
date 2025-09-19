@@ -41,7 +41,7 @@ export const PatientSchema = z.object({
   house_number: z.string().min(1, "House number is required"),
   name: z.string().min(2, "Name must be at least 2 characters long"),
   gender: z.enum(GENDERS),
-  mobile_number: z.string().min(10, "Mobile number must be at least 10 digits"),
+  mobile_number: z.string().min(11, "Mobile number must be at least 11 digits"),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
 });
@@ -119,16 +119,10 @@ export const AdultFieldsSchema = z.object({
 });
 
 // Complete Adult Schema (Patient + Adult fields)
-export const AdultSchema = PatientSchema.extend(AdultFieldsSchema.shape);
+export const AdultSchema = z.intersection(PatientSchema, AdultFieldsSchema);
 
 // Pediatric Schema (inherits from Patient)
 export const PediatricSchema = PatientSchema;
-
-// Union type for all patient types
-export const PatientUnionSchema = z.discriminatedUnion("patient_type", [
-  AdultSchema,
-  PediatricSchema,
-]);
 
 // Create Patient Schema (for forms - without read-only fields)
 export const CreatePatientSchema = PatientSchema.omit({
@@ -137,11 +131,10 @@ export const CreatePatientSchema = PatientSchema.omit({
   updated_at: true,
 });
 
-export const CreateAdultSchema = AdultSchema.omit({
-  id: true,
-  created_at: true,
-  updated_at: true,
-});
+export const CreateAdultSchema = z.intersection(
+  CreatePatientSchema,
+  AdultFieldsSchema,
+);
 
 export const CreatePediatricSchema = PediatricSchema.omit({
   id: true,
@@ -303,7 +296,6 @@ export const FORM_OPTIONS = {
 export type Patient = z.infer<typeof PatientSchema>;
 export type AdultType = z.infer<typeof AdultSchema>;
 export type PediatricType = z.infer<typeof PediatricSchema>;
-export type PatientUnion = z.infer<typeof PatientUnionSchema>;
 
 export type CreatePatient = z.infer<typeof CreatePatientSchema>;
 export type CreateAdultType = z.infer<typeof CreateAdultSchema>;

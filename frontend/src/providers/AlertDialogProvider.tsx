@@ -41,7 +41,7 @@ const AlertDialogProvider = () => {
             {alertConfig?.title || "Confirmation Required"}
           </AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogDescription>
+        <AlertDialogDescription className="user-select-none">
           {alertConfig?.description || "Are you sure you want to proceed?"}
         </AlertDialogDescription>
         <AlertDialogFooter>

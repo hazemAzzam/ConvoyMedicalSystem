@@ -26,7 +26,74 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateAdultSchema } from "../_types/patientSchema";
 import { cn } from "@/lib/utils";
 import { useAdult } from "../_hooks/usePatients";
-import { getServerErrors } from "@/lib/getErrors";
+import { setServerErrors } from "@/lib/setServerError";
+
+const FORM_DATA = {
+  basicInfo: [
+    [
+      {
+        name: "code",
+        label: "Code",
+        component: ControlledInput<CreateAdultType>,
+      },
+      {
+        name: "house_number",
+        label: "House Number",
+        component: ControlledInput<CreateAdultType>,
+      },
+    ],
+  ],
+  personalInfo: [
+    [
+      {
+        name: "name",
+        label: "Name",
+        component: ControlledInput<CreateAdultType>,
+      },
+      {
+        name: "gender",
+        label: "Gender",
+        component: ControlledSelect<CreateAdultType>,
+      },
+      {
+        name: "age",
+        label: "Age",
+        component: ControlledInput<CreateAdultType>,
+      },
+      {
+        name: "occupation",
+        label: "Occupation",
+        component: ControlledInput<CreateAdultType>,
+      },
+    ],
+    [
+      {
+        name: "mobile_number",
+        label: "Mobile Number",
+        component: ControlledInput<CreateAdultType>,
+      },
+      {
+        name: "marital_status",
+        label: "Marital Status",
+        component: ControlledSelect<CreateAdultType>,
+      },
+    ],
+    [
+      {
+        name: "children_number",
+        label: "Children Number",
+        component: ControlledInput<CreateAdultType>,
+        condition: (form: CreateAdultType) => form.marital_status !== "single",
+      },
+      {
+        name: "age_of_the_youngest",
+        label: "Age of the Youngest",
+        component: ControlledInput<CreateAdultType>,
+        condition: (form: CreateAdultType) => form.marital_status !== "single",
+      },
+    ],
+  ],
+};
 
 function Row({
   children,
@@ -44,7 +111,7 @@ function Row({
 
 function AccordionHeader({ children }: { children: React.ReactNode }) {
   return (
-    <AccordionPrimitive.Header className="w-full rounded-md py-2">
+    <AccordionPrimitive.Header className="flex py-2">
       {children}
     </AccordionPrimitive.Header>
   );
@@ -90,7 +157,7 @@ export default function AdultForm({
     } catch (error) {
       toast.error("Failed to create patient");
 
-      getServerErrors(error, form);
+      setServerErrors(error, form);
     }
   };
 
@@ -98,13 +165,13 @@ export default function AdultForm({
     <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
       <FormProvider {...form}>
         <div className="flex flex-col gap-4 rounded-md">
-          <Accordion type="multiple" className="space-y-4">
+          <Accordion type="single" className="space-y-4">
             <AccordionItem
               value="basic-info"
               className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
             >
               <AccordionHeader>
-                <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-2">
+                <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
                   <h2 className="font-medium">Basic Info</h2>
                   <PlusIcon
                     size={16}
@@ -130,7 +197,7 @@ export default function AdultForm({
               className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
             >
               <AccordionHeader>
-                <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-2">
+                <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
                   <h2 className="font-medium">Personal Info</h2>
                   <PlusIcon
                     size={16}
@@ -155,17 +222,14 @@ export default function AdultForm({
                   />
                 </Row>
                 <Row className="flex-col md:flex-row">
-                  <ControlledOTP<CreateAdultType>
+                  <ControlledInput<CreateAdultType>
                     name="mobile_number"
                     label="Mobile Number"
-                    length={11}
-                    maxLength={11}
                   />
-                  <ControlledRadioGroup<CreateAdultType>
+                  <ControlledSelect<CreateAdultType>
                     name="marital_status"
                     label="Marital Status"
                     options={[...FORM_OPTIONS.maritalStatuses]}
-                    orientation="horizontal"
                   />
                 </Row>
                 {form.watch("marital_status") !== "single" && (
@@ -181,11 +245,10 @@ export default function AdultForm({
                   </Row>
                 )}
                 <Row>
-                  <ControlledRadioGroup<CreateAdultType>
+                  <ControlledSelect<CreateAdultType>
                     name="education_level"
                     label="Education Level"
                     options={[...FORM_OPTIONS.educationLevels]}
-                    orientation="horizontal"
                   />
                 </Row>
               </AccordionContent>
@@ -196,7 +259,7 @@ export default function AdultForm({
               className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
             >
               <AccordionHeader>
-                <AccordionPrimitive.Trigger className="flex w-full items-center justify-between p-2">
+                <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
                   <h2 className="font-medium">Habits of Medical Importance</h2>
                   <PlusIcon
                     size={16}
@@ -208,11 +271,10 @@ export default function AdultForm({
 
               <AccordionContent className="flex flex-col gap-4 p-2">
                 <Row>
-                  <ControlledRadioGroup<CreateAdultType>
+                  <ControlledSelect<CreateAdultType>
                     name="smoking"
                     label="Smoking"
                     options={[...FORM_OPTIONS.smoking]}
-                    orientation="horizontal"
                   />
                   {form.watch("smoking") === "yes" && (
                     <>
@@ -232,11 +294,10 @@ export default function AdultForm({
                   )}
                 </Row>
                 <Row>
-                  <ControlledRadioGroup<CreateAdultType>
+                  <ControlledSelect<CreateAdultType>
                     name="cessation"
                     label="Smoking Cessations"
                     options={[...FORM_OPTIONS.cessation]}
-                    orientation="horizontal"
                   />
                   {form.watch("cessation") === "yes" && (
                     <ControlledInput<CreateAdultType>
@@ -245,6 +306,251 @@ export default function AdultForm({
                     />
                   )}
                 </Row>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Menstruation Section - Only for Females */}
+            {form.watch("gender") === "female" && (
+              <AccordionItem
+                value="menstruation"
+                className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+              >
+                <AccordionHeader>
+                  <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                    <h2 className="font-medium">
+                      Menstruation & Contraception
+                    </h2>
+                    <PlusIcon
+                      size={16}
+                      className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+                      aria-hidden="true"
+                    />
+                  </AccordionPrimitive.Trigger>
+                </AccordionHeader>
+
+                <AccordionContent className="flex flex-col gap-4 p-2">
+                  <Row>
+                    <ControlledSelect<CreateAdultType>
+                      name="menstruation"
+                      label="Menstruation"
+                      options={[...FORM_OPTIONS.menstruations]}
+                    />
+                    <ControlledInput<CreateAdultType>
+                      name="gravidal_number"
+                      label="Gravidal Number"
+                    />
+                    <ControlledInput<CreateAdultType>
+                      name="abortion_number"
+                      label="Abortion Number"
+                    />
+                  </Row>
+                  <Row>
+                    <ControlledSelect<CreateAdultType>
+                      name="contraception"
+                      label="Contraception"
+                      options={[
+                        { value: "false", label: "No" },
+                        { value: "true", label: "Yes" },
+                      ]}
+                    />
+                    {form.watch("contraception") === "true" && (
+                      <>
+                        <ControlledSelect<CreateAdultType>
+                          name="contraception_method"
+                          label="Contraception Method"
+                          options={[...FORM_OPTIONS.contraceptionMethods]}
+                        />
+                        <ControlledInput<CreateAdultType>
+                          name="contraception_other_method"
+                          label="Other Method"
+                        />
+                      </>
+                    )}
+                  </Row>
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {/* General Examination Section */}
+            <AccordionItem
+              value="general-examination"
+              className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+            >
+              <AccordionHeader>
+                <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                  <h2 className="font-medium">General Examination</h2>
+                  <PlusIcon
+                    size={16}
+                    className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+                    aria-hidden="true"
+                  />
+                </AccordionPrimitive.Trigger>
+              </AccordionHeader>
+
+              <AccordionContent className="flex flex-col gap-4 p-2">
+                <Row>
+                  <ControlledInput<CreateAdultType>
+                    name="bp"
+                    label="Blood Pressure"
+                  />
+                  <ControlledInput<CreateAdultType>
+                    name="hr"
+                    label="Heart Rate"
+                    type="number"
+                  />
+                  <ControlledInput<CreateAdultType>
+                    name="temp"
+                    label="Temperature"
+                    type="number"
+                  />
+                </Row>
+                <Row>
+                  <ControlledInput<CreateAdultType>
+                    name="rbs"
+                    label="Random Blood Sugar"
+                    type="number"
+                  />
+                  <ControlledInput<CreateAdultType>
+                    name="spo2"
+                    label="SpO2"
+                    type="number"
+                  />
+                </Row>
+                <Row>
+                  <ControlledSelect<CreateAdultType>
+                    name="jaundice"
+                    label="Jaundice"
+                    options={[
+                      { value: "false", label: "No" },
+                      { value: "true", label: "Yes" },
+                    ]}
+                  />
+                  <ControlledSelect<CreateAdultType>
+                    name="pallor"
+                    label="Pallor"
+                    options={[
+                      { value: "false", label: "No" },
+                      { value: "true", label: "Yes" },
+                    ]}
+                  />
+                </Row>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Past History Section */}
+            <AccordionItem
+              value="past-history"
+              className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+            >
+              <AccordionHeader>
+                <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                  <h2 className="font-medium">Past History</h2>
+                  <PlusIcon
+                    size={16}
+                    className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+                    aria-hidden="true"
+                  />
+                </AccordionPrimitive.Trigger>
+              </AccordionHeader>
+
+              <AccordionContent className="flex flex-col gap-4 p-2">
+                <Row>
+                  <ControlledSelect<CreateAdultType>
+                    name="allergy"
+                    label="Allergy"
+                    options={[
+                      { value: "false", label: "No" },
+                      { value: "true", label: "Yes" },
+                    ]}
+                  />
+                  {form.watch("allergy") === "true" && (
+                    <ControlledInput<CreateAdultType>
+                      name="allergy_specification"
+                      label="Allergy Specification"
+                    />
+                  )}
+                </Row>
+                <Row>
+                  <ControlledSelect<CreateAdultType>
+                    name="blood_transfusion"
+                    label="Blood Transfusion"
+                    options={[...FORM_OPTIONS.bloodTransfusions]}
+                  />
+                  {form.watch("blood_transfusion") !== "no" && (
+                    <ControlledInput<CreateAdultType>
+                      name="blood_transfusion_duration"
+                      label="Transfusion Duration"
+                    />
+                  )}
+                </Row>
+                <Row>
+                  <ControlledSelect<CreateAdultType>
+                    name="surgical"
+                    label="Surgical History"
+                    options={[...FORM_OPTIONS.surgicals]}
+                  />
+                  {form.watch("surgical") === "operation" && (
+                    <ControlledInput<CreateAdultType>
+                      name="surgical_operation"
+                      label="Surgical Operation"
+                    />
+                  )}
+                  {form.watch("surgical") === "icu" && (
+                    <ControlledInput<CreateAdultType>
+                      name="icu"
+                      label="ICU Details"
+                    />
+                  )}
+                </Row>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Medical Data Arrays Section */}
+            <AccordionItem
+              value="medical-data"
+              className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+            >
+              <AccordionHeader>
+                <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                  <h2 className="font-medium">Medical Data (Arrays)</h2>
+                  <PlusIcon
+                    size={16}
+                    className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+                    aria-hidden="true"
+                  />
+                </AccordionPrimitive.Trigger>
+              </AccordionHeader>
+
+              <AccordionContent className="flex flex-col gap-4 p-2">
+                <div className="text-muted-foreground text-sm">
+                  <p>
+                    This section contains array fields that will be implemented
+                    with autocomplete functionality:
+                  </p>
+                  <ul className="mt-2 space-y-1">
+                    <li>
+                      • <strong>Complaints:</strong> Medical complaints and
+                      symptoms
+                    </li>
+                    <li>
+                      • <strong>Cyanosis:</strong> Cyanosis conditions
+                    </li>
+                    <li>
+                      • <strong>Medical History:</strong> Past medical
+                      conditions
+                    </li>
+                    <li>
+                      • <strong>Drugs:</strong> Current medications
+                    </li>
+                    <li>
+                      • <strong>Family History:</strong> Family medical history
+                    </li>
+                  </ul>
+                  <p className="mt-2 text-xs">
+                    These fields will be connected to the respective API
+                    endpoints for autocomplete functionality.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
