@@ -86,7 +86,7 @@ export const AdultFieldsSchema = z.object({
   abortion_number: z.string().nullable().optional(),
 
   // Contraception
-  contraception: z.boolean().default(false),
+  contraception: z.string().default("no"),
   contraception_method: z.enum(CONTRACEPTION_METHODS).nullable().optional(),
   contraception_other_method: z.string().nullable().optional(),
 
@@ -100,12 +100,12 @@ export const AdultFieldsSchema = z.object({
   rbs: z.number().nullable().optional(),
   spo2: z.number().nullable().optional(),
   cyanosis: z.array(z.string()).default([]),
-  jaundice: z.boolean().default(false),
-  pallor: z.boolean().default(false),
+  jaundice: z.string().default("no"),
+  pallor: z.string().default("no"),
 
   // Past History
   medical: z.array(z.string()).default([]),
-  allergy: z.boolean().default(false),
+  allergy: z.string().default("no"),
   allergy_specification: z.string().nullable().optional(),
   blood_transfusion: z.enum(BLOOD_TRANSFUSIONS).default("no"),
   blood_transfusion_duration: z.string().nullable().optional(),
