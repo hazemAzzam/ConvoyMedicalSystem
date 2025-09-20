@@ -29,6 +29,8 @@ import { showAlert } from "@/hooks/use-alert-store";
 import { useDeletePatient, useDeletePatients } from "./usePatientsMutations";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 // Patient columns definition factory
 export const createPatientColumns = (): ColumnDef<Patient>[] => [
@@ -56,28 +58,37 @@ export const createPatientColumns = (): ColumnDef<Patient>[] => [
     enableHiding: false,
   },
   {
-    header: "Name",
-    accessorKey: "name",
+    header: "Code",
+    accessorKey: "code",
     cell: ({ row }) => (
       <div>
-        <div className="font-medium">{row.getValue("name")}</div>
-        <div className="text-foreground/60">code: {row.original.code}</div>
+        <div className="font-medium">{row.getValue("code")}</div>
       </div>
     ),
     size: 180,
     enableHiding: false,
   },
   {
+    header: "Name",
+    accessorKey: "name",
+    cell: ({ row }) => (
+      <div>
+        <div className="font-medium">{row.getValue("name")}</div>
+        <div className="text-foreground/60">
+          {row.original.age}y • {row.original.gender}
+        </div>
+      </div>
+    ),
+    size: 180,
+    enableHiding: false,
+  },
+
+  {
     header: "Mobile Number",
     accessorKey: "mobile_number",
     size: 220,
   },
 
-  {
-    header: "Gender",
-    accessorKey: "gender",
-    size: 100,
-  },
   {
     header: "Type",
     accessorKey: "patient_type",
@@ -109,7 +120,6 @@ export const createPatientColumns = (): ColumnDef<Patient>[] => [
 
 // Custom row actions component for patients
 export function PatientRowActions({ row }: { row: Row<Patient> }) {
-  const queryClient = useQueryClient();
   const deletePatientMutation = useDeletePatient();
   const router = useRouter();
   return (
@@ -130,7 +140,7 @@ export function PatientRowActions({ row }: { row: Row<Patient> }) {
         <DropdownMenuLabel>Patient Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => router.push(`/patients/edit/${row.original.id}`)}
+          onClick={() => router.push(`/patients/${row.original.id}`)}
         >
           <EyeIcon size={16} aria-hidden="true" />
           <span>View Details</span>

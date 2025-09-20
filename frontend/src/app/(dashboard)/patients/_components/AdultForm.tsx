@@ -95,8 +95,16 @@ export default function AdultForm({
   };
 
   return (
-    <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-      <FormProvider {...form}>
+    <FormProvider {...form}>
+      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+        {Object.keys(form.formState.errors).map((error) => (
+          <p className="text-destructive flex gap-2 text-sm" key={error}>
+            <span>{error}:</span>
+            <span>
+              {form.formState.errors[error as keyof CreateAdultType]?.message}
+            </span>
+          </p>
+        ))}
         <div className="flex flex-col gap-4 rounded-md">
           <Accordion type="single" className="space-y-4">
             <BasicInfo />
@@ -131,8 +139,8 @@ export default function AdultForm({
             </div>
           </Accordion>
         </div>
-      </FormProvider>
-    </form>
+      </form>
+    </FormProvider>
   );
 }
 
@@ -333,12 +341,9 @@ const Menstruation = () => {
               <ControlledSelect<CreateAdultType>
                 name="contraception"
                 label="Contraception"
-                options={[
-                  { value: "false", label: "No" },
-                  { value: "true", label: "Yes" },
-                ]}
+                options={[...FORM_OPTIONS.contraception]}
               />
-              {form.watch("contraception") === "true" && (
+              {form.watch("contraception") === "yes" && (
                 <>
                   <ControlledSelect<CreateAdultType>
                     name="contraception_method"
@@ -406,18 +411,12 @@ const GeneralExamination = () => {
           <ControlledSelect<CreateAdultType>
             name="jaundice"
             label="Jaundice"
-            options={[
-              { value: "false", label: "No" },
-              { value: "true", label: "Yes" },
-            ]}
+            options={[...FORM_OPTIONS.jaundice]}
           />
           <ControlledSelect<CreateAdultType>
             name="pallor"
             label="Pallor"
-            options={[
-              { value: "false", label: "No" },
-              { value: "true", label: "Yes" },
-            ]}
+            options={[...FORM_OPTIONS.pallor]}
           />
         </Row>
       </AccordionContent>
@@ -448,12 +447,9 @@ const PastHistory = () => {
           <ControlledSelect<CreateAdultType>
             name="allergy"
             label="Allergy"
-            options={[
-              { value: "false", label: "No" },
-              { value: "true", label: "Yes" },
-            ]}
+            options={[...FORM_OPTIONS.allergy]}
           />
-          {form.watch("allergy") === "true" && (
+          {form.watch("allergy") === "yes" && (
             <ControlledInput<CreateAdultType>
               name="allergy_specification"
               label="Allergy Specification"

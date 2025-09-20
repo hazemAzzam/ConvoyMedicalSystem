@@ -27,4 +27,7 @@ export const setServerErrors = <T extends FieldValues>(
       message: response?.message || "An unexpected error occurred",
     });
   }
+  form.setError("root" as Path<T>, {
+    message: "Please fix the errors Before submitting",
+  });
 };

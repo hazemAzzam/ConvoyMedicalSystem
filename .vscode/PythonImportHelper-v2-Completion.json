@@ -104,6 +104,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1298,6 +1330,24 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.patients.migrations.0002_alter_adult_allergy_alter_adult_contraception_and_more",
+        "description": "backend.patients.migrations.0002_alter_adult_allergy_alter_adult_contraception_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"patients\", \"0001_initial\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"adult\",\n            name=\"allergy\",\n            field=models.CharField(\n                choices=[(\"yes\", \"Yes\"), (\"no\", \"No\")],",
+        "detail": "backend.patients.migrations.0002_alter_adult_allergy_alter_adult_contraception_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.patients.migrations.0003_remove_adult_age_patient_age",
+        "description": "backend.patients.migrations.0003_remove_adult_age_patient_age",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"patients\", \"0002_alter_adult_allergy_alter_adult_contraception_and_more\"),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name=\"adult\",\n            name=\"age\",\n        ),\n        migrations.AddField(",
+        "detail": "backend.patients.migrations.0003_remove_adult_age_patient_age",
+        "documentation": {}
+    },
+    {
         "label": "PatientAdmin",
         "kind": 6,
         "importPath": "backend.patients.admin",
@@ -1338,7 +1388,7 @@
         "kind": 6,
         "importPath": "backend.patients.models",
         "description": "backend.patients.models",
-        "peekOfCode": "class Patient(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    patient_type = models.CharField(max_length=20, choices=[('adult', 'Adult'), ('pediatric', 'Pediatric')], default='adult')\n    code = models.CharField(\"Code\", max_length=255, unique=True, default='')\n    house_number = models.CharField(\"House Number\", max_length=255, default='')\n    name = models.CharField(max_length=200, default='')\n    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], default='male')\n    mobile_number = models.CharField(max_length=15, default='')\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)",
+        "peekOfCode": "class Patient(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    patient_type = models.CharField(max_length=20, choices=[('adult', 'Adult'), ('pediatric', 'Pediatric')], default='adult')\n    code = models.CharField(\"Code\", max_length=255, unique=True, default='')\n    house_number = models.CharField(\"House Number\", max_length=255, default='')\n    name = models.CharField(max_length=200, default='')\n    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], default='male')\n    mobile_number = models.CharField(max_length=15, default='')\n    age = models.IntegerField(default=0)\n    created_at = models.DateTimeField(auto_now_add=True)",
         "detail": "backend.patients.models",
         "documentation": {}
     },
@@ -1347,7 +1397,7 @@
         "kind": 6,
         "importPath": "backend.patients.models",
         "description": "backend.patients.models",
-        "peekOfCode": "class Adult(Patient):\n    occupation = models.CharField(max_length=255, default='')\n    marital_status = models.CharField(max_length=255, choices=[('married', 'Married'), ('single', 'Single'), ('divorced', 'Divorced'), ('widowed', 'Widowed')], default='single')\n    children_number = models.IntegerField(default=0)\n    age_of_the_youngest = models.IntegerField(default=0)\n    education_level = models.CharField(max_length=255, choices=EDUCATION_LEVELS, default='primary')\n    age = models.IntegerField(default=0)\n    # Hapits of medical importance\n    smoking = models.CharField(\"Smoking\", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')\n    smoking_rate = models.CharField(\"Rate\", max_length=255, null=True, blank=True)",
+        "peekOfCode": "class Adult(Patient):\n    occupation = models.CharField(max_length=255, default='')\n    marital_status = models.CharField(max_length=255, choices=[('married', 'Married'), ('single', 'Single'), ('divorced', 'Divorced'), ('widowed', 'Widowed')], default='single')\n    children_number = models.IntegerField(default=0)\n    age_of_the_youngest = models.IntegerField(default=0)\n    education_level = models.CharField(max_length=255, choices=EDUCATION_LEVELS, default='primary')\n    # Hapits of medical importance\n    smoking = models.CharField(\"Smoking\", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')\n    smoking_rate = models.CharField(\"Rate\", max_length=255, null=True, blank=True)\n    smoking_type = models.CharField(\"Type\", max_length=255, null=True, blank=True)",
         "detail": "backend.patients.models",
         "documentation": {}
     },
@@ -1419,7 +1469,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_mobile_number(self, value):\n        \"\"\"Validate phone number format\"\"\"\n        if not value:\n            raise serializers.ValidationError(\"Mobile number is required.\")",
+        "peekOfCode": "class PatientSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Patient model\"\"\"\n    class Meta:\n        model = Patient\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_age(self, value):\n        \"\"\"Validate age\"\"\"\n        if value < 0:\n            raise serializers.ValidationError(\"Age cannot be negative.\")",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },

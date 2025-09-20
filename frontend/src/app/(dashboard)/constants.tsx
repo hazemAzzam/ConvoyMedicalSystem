@@ -44,11 +44,7 @@ import { RouteGroupType } from "./types";
 export const ROUTE_GROUPS: RouteGroupType[] = [
   {
     group: "Patients Management",
-    routes: [
-      { href: "/patients", label: "All Patients", icon: <Users /> },
-      { href: "/patients/adult", label: "Adult Patients", icon: <FaUserMd /> },
-      { href: "/patients/child", label: "Child Patients", icon: <FaBaby /> },
-    ],
+    routes: [{ href: "/patients", label: "All Patients", icon: <Users /> }],
   },
   {
     group: "Clinics Management",

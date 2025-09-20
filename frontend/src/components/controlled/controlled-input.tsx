@@ -33,7 +33,7 @@ const ControlledInput = <T extends FieldValues>({
         render={({ field, fieldState: { error } }) => (
           <>
             <Input
-              className={className}
+              className={cn("bg-accent", className)}
               type={type}
               id={name}
               data-slot="input"

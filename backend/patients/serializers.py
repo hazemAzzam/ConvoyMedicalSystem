@@ -9,6 +9,15 @@ class PatientSerializer(serializers.ModelSerializer):
         model = Patient
         fields = "__all__"
         read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+    def validate_age(self, value):
+        """Validate age"""
+        if value < 0:
+            raise serializers.ValidationError("Age cannot be negative.")
+        if value > 150:
+            raise serializers.ValidationError("Age seems unrealistic.")
+        return value
     
     def validate_mobile_number(self, value):
         """Validate phone number format"""
@@ -66,13 +75,7 @@ class AdultSerializer(serializers.ModelSerializer):
         
         return value.strip()
     
-    def validate_age(self, value):
-        """Validate age"""
-        if value < 0:
-            raise serializers.ValidationError("Age cannot be negative.")
-        if value > 150:
-            raise serializers.ValidationError("Age seems unrealistic.")
-        return value
+    
     
     def validate_children_number(self, value):
         """Validate children number"""
@@ -84,6 +87,34 @@ class AdultSerializer(serializers.ModelSerializer):
         """Validate age of youngest child"""
         if value < 0:
             raise serializers.ValidationError("Age of youngest child cannot be negative.")
+        return value
+    
+    def validate_contraception(self, value):
+        """Validate contraception choice"""
+        valid_choices = ['yes', 'no']
+        if value not in valid_choices:
+            raise serializers.ValidationError(f"Contraception must be one of: {', '.join(valid_choices)}")
+        return value
+    
+    def validate_jaundice(self, value):
+        """Validate jaundice choice"""
+        valid_choices = ['yes', 'no']
+        if value not in valid_choices:
+            raise serializers.ValidationError(f"Jaundice must be one of: {', '.join(valid_choices)}")
+        return value
+    
+    def validate_pallor(self, value):
+        """Validate pallor choice"""
+        valid_choices = ['yes', 'no']
+        if value not in valid_choices:
+            raise serializers.ValidationError(f"Pallor must be one of: {', '.join(valid_choices)}")
+        return value
+    
+    def validate_allergy(self, value):
+        """Validate allergy choice"""
+        valid_choices = ['yes', 'no']
+        if value not in valid_choices:
+            raise serializers.ValidationError(f"Allergy must be one of: {', '.join(valid_choices)}")
         return value
 
 

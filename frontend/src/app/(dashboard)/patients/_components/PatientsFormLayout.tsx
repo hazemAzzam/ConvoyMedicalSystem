@@ -31,7 +31,7 @@ export default function PatientsFormLayout({
             variant={patientType === "adult" ? "default" : "outline"}
             onClick={() => !editing && setPatientType("adult")}
             className={cn(
-              "rounded-none border transition-all",
+              "rounded-none transition-all",
               patientType === "adult" && "text-secondary",
               editing && "cursor-not-allowed",
               // editing && "bg-gray-200",
@@ -44,7 +44,7 @@ export default function PatientsFormLayout({
             variant={patientType === "pediatric" ? "default" : "outline"}
             onClick={() => !editing && setPatientType("pediatric")}
             className={cn(
-              "rounded-none border transition-all",
+              "rounded-none transition-all",
               patientType === "pediatric" && "text-secondary",
               editing && "cursor-not-allowed",
               // editing && "bg-gray-200",

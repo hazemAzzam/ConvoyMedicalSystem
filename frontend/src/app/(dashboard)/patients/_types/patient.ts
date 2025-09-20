@@ -2,6 +2,7 @@ export interface Patient {
   id: string;
   patient_type: "adult" | "pediatric";
   code: string;
+  age: string;
   house_number: string;
   name: string;
   gender: "male" | "female";
@@ -24,14 +25,13 @@ export interface Adult extends Patient {
     | "secondary"
     | "university"
     | "postgraduate";
-  age: number;
 
   // Smoking habits
-  smoking: boolean;
+  smoking: "yes" | "no";
   smoking_rate?: string | null;
   smoking_type?: string | null;
   other_smoking?: string | null;
-  cessation: boolean;
+  cessation: "yes" | "no";
   cessation_duration?: string | null;
 
   // Menstruation (for females)
@@ -40,7 +40,7 @@ export interface Adult extends Patient {
   abortion_number?: string | null;
 
   // Contraception
-  contraception: boolean;
+  contraception?: "yes" | "no";
   contraception_method?: "implant" | "iud" | "coc" | "other" | null;
   contraception_other_method?: string | null;
 
@@ -54,12 +54,12 @@ export interface Adult extends Patient {
   rbs?: number | null;
   spo2?: number | null;
   cyanosis: string[];
-  jaundice: boolean;
-  pallor: boolean;
+  jaundice: "yes" | "no";
+  pallor: "yes" | "no";
 
   // Past History
   medical: string[];
-  allergy: boolean;
+  allergy: "yes" | "no";
   allergy_specification?: string | null;
   blood_transfusion: "no" | "occasional" | "regular";
   blood_transfusion_duration?: string | null;

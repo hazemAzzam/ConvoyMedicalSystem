@@ -136,7 +136,7 @@ const RouteGroup = ({ group }: { group: RouteGroupType }) => {
                 className={cn(
                   "h-auto w-full cursor-pointer justify-start gap-2 p-2",
                   isHydrated &&
-                    pathname.endsWith(route.href) &&
+                    pathname.includes(route.href) &&
                     "!text-primary bg-accent",
                 )}
               >

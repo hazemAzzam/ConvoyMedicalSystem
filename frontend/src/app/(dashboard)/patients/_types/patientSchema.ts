@@ -33,6 +33,8 @@ export const MARITAL_STATUSES = [
   "widowed",
 ] as const;
 
+export const YES_NO = ["no", "yes"] as const;
+
 // Base Patient Schema
 export const PatientSchema = z.object({
   id: z.string(),
@@ -42,6 +44,13 @@ export const PatientSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters long"),
   gender: z.enum(GENDERS),
   mobile_number: z.string().min(11, "Mobile number must be at least 11 digits"),
+  age: z.coerce
+    .number()
+    .int()
+    .min(0, "Age cannot be negative")
+    .max(150, "Age seems unrealistic")
+    .nullable()
+    .optional(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
 });
@@ -64,20 +73,13 @@ export const AdultFieldsSchema = z.object({
     .nullable()
     .optional(),
   education_level: z.enum(EDUCATION_LEVELS),
-  age: z.coerce
-    .number()
-    .int()
-    .min(0, "Age cannot be negative")
-    .max(150, "Age seems unrealistic")
-    .nullable()
-    .optional(),
 
   // Smoking habits
-  smoking: z.string().default("no"),
+  smoking: z.enum(YES_NO).default("no"),
   smoking_rate: z.string().nullable().optional(),
   smoking_type: z.string().nullable().optional(),
   other_smoking: z.string().nullable().optional(),
-  cessation: z.string().default("no"),
+  cessation: z.enum(YES_NO).default("no"),
   cessation_duration: z.string().nullable().optional(),
 
   // Menstruation (for females)
@@ -86,7 +88,7 @@ export const AdultFieldsSchema = z.object({
   abortion_number: z.string().nullable().optional(),
 
   // Contraception
-  contraception: z.string().default("no"),
+  contraception: z.enum(YES_NO).default("no").nullable().optional(),
   contraception_method: z.enum(CONTRACEPTION_METHODS).nullable().optional(),
   contraception_other_method: z.string().nullable().optional(),
 
@@ -100,12 +102,12 @@ export const AdultFieldsSchema = z.object({
   rbs: z.number().nullable().optional(),
   spo2: z.number().nullable().optional(),
   cyanosis: z.array(z.string()).default([]),
-  jaundice: z.string().default("no"),
+  jaundice: z.enum(YES_NO).default("no"),
   pallor: z.string().default("no"),
 
   // Past History
   medical: z.array(z.string()).default([]),
-  allergy: z.string().default("no"),
+  allergy: z.enum(YES_NO).default("no"),
   allergy_specification: z.string().nullable().optional(),
   blood_transfusion: z.enum(BLOOD_TRANSFUSIONS).default("no"),
   blood_transfusion_duration: z.string().nullable().optional(),
@@ -163,6 +165,7 @@ export const DEFAULT_PATIENT_VALUES: z.infer<typeof CreatePatientSchema> = {
   name: "",
   gender: "male",
   mobile_number: "",
+  age: null,
 };
 
 export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
@@ -173,6 +176,7 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
   name: "",
   gender: "male",
   mobile_number: "",
+  age: null,
 
   // Adult-specific fields
   occupation: "",
@@ -180,7 +184,6 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
   children_number: 0,
   age_of_the_youngest: 0,
   education_level: "primary",
-  age: null,
 
   // Smoking habits
   smoking: "no",
@@ -196,7 +199,7 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
   abortion_number: null,
 
   // Contraception
-  contraception: false,
+  contraception: "no",
   contraception_method: null,
   contraception_other_method: null,
 
@@ -210,12 +213,12 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
   rbs: null,
   spo2: null,
   cyanosis: [],
-  jaundice: false,
-  pallor: false,
+  jaundice: "no",
+  pallor: "no",
 
   // Past History
   medical: [],
-  allergy: false,
+  allergy: "no",
   allergy_specification: null,
   blood_transfusion: "no",
   blood_transfusion_duration: null,
@@ -235,6 +238,7 @@ export const DEFAULT_PEDIATRIC_VALUES: z.infer<typeof CreatePediatricSchema> = {
   name: "",
   gender: "male",
   mobile_number: "",
+  age: null,
 };
 
 // Form field options for dropdowns
@@ -267,6 +271,10 @@ export const FORM_OPTIONS = {
     { value: "irregular", label: "Irregular" },
     { value: "menopause", label: "Menopause" },
   ],
+  contraception: [
+    { value: "no", label: "No" },
+    { value: "yes", label: "Yes" },
+  ],
   contraceptionMethods: [
     { value: "implant", label: "Implant" },
     { value: "iud", label: "IUD" },
@@ -287,6 +295,18 @@ export const FORM_OPTIONS = {
     { value: "yes", label: "Yes" },
   ],
   cessation: [
+    { value: "no", label: "No" },
+    { value: "yes", label: "Yes" },
+  ],
+  jaundice: [
+    { value: "no", label: "No" },
+    { value: "yes", label: "Yes" },
+  ],
+  pallor: [
+    { value: "no", label: "No" },
+    { value: "yes", label: "Yes" },
+  ],
+  allergy: [
     { value: "no", label: "No" },
     { value: "yes", label: "Yes" },
   ],

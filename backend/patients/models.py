@@ -47,6 +47,7 @@ class Patient(models.Model):
     name = models.CharField(max_length=200, default='')
     gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], default='male')
     mobile_number = models.CharField(max_length=15, default='')
+    age = models.IntegerField(default=0)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -63,7 +64,6 @@ class Adult(Patient):
     children_number = models.IntegerField(default=0)
     age_of_the_youngest = models.IntegerField(default=0)
     education_level = models.CharField(max_length=255, choices=EDUCATION_LEVELS, default='primary')
-    age = models.IntegerField(default=0)
 
     # Hapits of medical importance
     smoking = models.CharField("Smoking", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
@@ -78,7 +78,7 @@ class Adult(Patient):
     gravidal_number = models.CharField("Gravidal Number", max_length=255, null=True, blank=True)
     abortion_number = models.CharField("Abortion Number", max_length=255, null=True, blank=True)
 
-    contraception = models.BooleanField("Contraception", default=False)
+    contraception = models.CharField("Contraception", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
     contraception_method = models.CharField("Method", max_length=255, choices=CONTRACEPTION_METHODS, null=True, blank=True)
     contraception_other_method = models.CharField("Other", max_length=255, null=True, blank=True)
 
@@ -93,13 +93,13 @@ class Adult(Patient):
     spo2 = models.FloatField("Spo2", null=True, blank=True)
     
     cyanosis = models.ManyToManyField("others.CyanosisModel", related_name='adult_cyanosis', blank=True, verbose_name="Cyanosis")
-    jaundice = models.BooleanField("Jaundice", default=False)
-    pallor = models.BooleanField("Pallor", default=False)
+    jaundice = models.CharField("Jaundice", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
+    pallor = models.CharField("Pallor", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
 
 
     # past history
     medical = models.ManyToManyField("others.MedicalModel", related_name='adult_medical', blank=True, verbose_name="Medical")
-    allergy = models.BooleanField("Allergy", default=False)
+    allergy = models.CharField("Allergy", max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
     allergy_specification = models.CharField("Specify", max_length=255, null=True, blank=True)
     blood_transfusion = models.CharField("Blood Transfusion", max_length=50, choices=BLOOD_TRANSFUSIONS, default='no')
 

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { X } from "lucide-react";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
 type Option = {
   value: string;
@@ -49,8 +50,13 @@ const ControlledSelect = <T extends FieldValues>({
         }) => (
           <>
             <Select onValueChange={onChange} {...restField}>
-              <div className="relative flex">
-                <SelectTrigger className="w-full">
+              <div className={cn("relative flex")}>
+                <SelectTrigger
+                  className={cn(
+                    "bg-accent w-full",
+                    error && "border-destructive border",
+                  )}
+                >
                   <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
                 {clearable && !!restField.value && (
