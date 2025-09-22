@@ -1,8 +1,7 @@
-"use client";
-
 import { StatsCardProps, StatsGrid } from "@/components/StatesGrid";
-import DataTable from "@/components/DataTable";
-import { usePatientsTable } from "@/app/(dashboard)/patients/_hooks/usePatientsTable";
+import { PatientsTable } from "./_components/PatientsTable";
+import { getPatients } from "./_services/patientQueries";
+import queryClient from "@/clients/reactQueryClient";
 
 const stats: StatsCardProps[] = [
   {
@@ -79,8 +78,11 @@ const stats: StatsCardProps[] = [
   },
 ];
 
-export default function PatientsPage() {
-  const { tableConfig } = usePatientsTable();
+export default async function PatientsPage() {
+  await queryClient.prefetchQuery({
+    queryKey: ["patients"],
+    queryFn: getPatients,
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -90,7 +92,7 @@ export default function PatientsPage() {
         </div>
         <StatsGrid stats={stats} />
 
-        <DataTable {...tableConfig} />
+        <PatientsTable />
       </div>
     </div>
   );
