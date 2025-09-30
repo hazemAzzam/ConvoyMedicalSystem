@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 import AdultForm from "./AdultForm";
 import PediatricForm from "./PediatricForm";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SymptomDialog } from "../../(others)/symptoms/_components/SymptomDialog";
 
 export default function PatientsFormLayout({
   title,

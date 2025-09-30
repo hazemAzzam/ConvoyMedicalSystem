@@ -18,4 +18,9 @@ export const API_ROUTES = {
     BULK_DELETE: "/clinics/bulk_delete/",
     AUTOCOMPLETE: "/clinics/autocomplete/",
   },
+  SYMPTOMS: {
+    LIST: "/symptoms/",
+    AUTOCOMPLETE: "/symptoms/autocomplete/",
+    CREATE: "/symptoms/",
+  },
 };

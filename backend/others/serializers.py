@@ -178,8 +178,9 @@ class SymptomSerializer(serializers.ModelSerializer):
 
 class SymptomAutocompleteSerializer(serializers.ModelSerializer):
     """Serializer for autocomplete fields - minimal data"""
-    clinic_name = serializers.CharField(source='clinic.name', read_only=True)
+    value = serializers.CharField(source='id', read_only=True)
+    label = serializers.CharField(source='name', read_only=True)
     
     class Meta:
         model = SymptomModel
-        fields = ['id', 'name', 'clinic_name']
+        fields = ['value', 'label']

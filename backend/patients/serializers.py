@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Patient, Adult
-
+from others.serializers import SymptomAutocompleteSerializer
 
 class PatientSerializer(serializers.ModelSerializer):
     """Full serializer for Patient model"""
@@ -49,11 +49,22 @@ class PatientAutocompleteSerializer(serializers.ModelSerializer):
 
 class AdultSerializer(serializers.ModelSerializer):
     """Full serializer for Adult model"""
+    complaints = serializers.SerializerMethodField()
     
     class Meta:
         model = Adult
         fields = "__all__"
         read_only_fields = ['id', 'created_at', 'updated_at']
+    
+    def get_complaints(self, obj):
+        """Return complaints as list of {value, label} objects"""
+        return [
+            {
+                'value': str(symptom.id),
+                'label': symptom.name
+            }
+            for symptom in obj.complaints.all()
+        ]
     
     def validate_mobile_number(self, value):
         """Validate phone number format"""
@@ -117,9 +128,31 @@ class AdultSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(f"Allergy must be one of: {', '.join(valid_choices)}")
         return value
 
+    def to_internal_value(self, data):
+        from others.models import SymptomModel
+
+        data = super().to_internal_value(data)
+        complaints_data = data.get("complaints", "no complaints")
+        print(complaints_data)
+        if complaints_data:
+            data["complaints"] = [SymptomModel.objects.get(id=complaint["value"]) for complaint in complaints_data]
+        return data
+
 
 class AdultAutocompleteSerializer(serializers.ModelSerializer):
     """Serializer for autocomplete fields - minimal data"""
+    complaints = serializers.SerializerMethodField()
+    
     class Meta:
         model = Adult
-        fields = ['id', 'name', 'mobile_number', 'age', 'occupation']
+        fields = ['id', 'name', 'mobile_number', 'age', 'occupation', 'complaints']
+    
+    def get_complaints(self, obj):
+        """Return complaints as list of {value, label} objects"""
+        return [
+            {
+                'value': str(symptom.id),
+                'label': symptom.name
+            }
+            for symptom in obj.complaints.all()
+        ]

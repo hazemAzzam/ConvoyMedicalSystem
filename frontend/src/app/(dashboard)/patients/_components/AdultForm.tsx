@@ -1,13 +1,15 @@
+"use client";
+
 import React, { useEffect } from "react";
+
 import {
   CreateAdultType,
   DEFAULT_ADULT_VALUES,
   FORM_OPTIONS,
-  GENDERS,
   UpdateAdultType,
 } from "../_types/patientSchema";
 import { Accordion as AccordionPrimitive } from "radix-ui";
-import { Form, FormProvider, useForm, useFormContext } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
 import {
   Accordion,
@@ -17,8 +19,6 @@ import {
 import { PlusIcon } from "lucide-react";
 import { ControlledSelect } from "@/components/controlled/controlled-select";
 import { ControlledInput } from "@/components/controlled/controlled-input";
-import { ControlledOTP } from "@/components/controlled/controlled-otp";
-import { ControlledRadioGroup } from "@/components/controlled/controlled-radio-group";
 import { useCreateAdult, useUpdateAdult } from "../_hooks/usePatientsMutations";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,11 @@ import { CreateAdultSchema } from "../_types/patientSchema";
 import { cn } from "@/lib/utils";
 import { useAdult } from "../_hooks/usePatients";
 import { setServerErrors } from "@/lib/setServerError";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ControlledMultiSelect } from "@/components/controlled/controlled-multiselect";
+import { SymptomDialog } from "../../(others)/symptoms/_components/SymptomDialog";
+import { useSymptomDiaglog } from "../../(others)/symptoms/_hooks/use-symptom-dialog";
+import { fetchSymptomsAutocomplete } from "../../(others)/symptoms/_services/symptoms-query";
 
 function Row({
   children,
@@ -61,16 +66,51 @@ export default function AdultForm({
     defaultValues: DEFAULT_ADULT_VALUES,
     resolver: zodResolver(CreateAdultSchema) as any,
   });
+  const symptomDialog = useSymptomDiaglog();
+
   const createAdultMutation = useCreateAdult();
   const updateAdultMutation = useUpdateAdult();
+  const adult = useAdult(id!);
 
-  if (editing && id) {
-    const adult = useAdult(id || "");
-    useEffect(() => {
-      if (adult.data) {
-        form.reset(adult.data);
-      }
-    }, [adult.data, form]);
+  useEffect(() => {
+    if (editing && id && adult.data) {
+      form.reset(adult.data);
+    }
+  }, [editing, id, adult.data, form]);
+
+  // Show loading state while fetching patient data
+  if (editing && id && adult.isLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="flex flex-col gap-4 rounded-md">
+          <div className="space-y-4">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={index}
+                className="bg-background relative rounded-md border px-4 py-4"
+              >
+                <Skeleton className="mb-4 h-6 w-32" />
+                <div className="flex flex-wrap gap-4">
+                  {Array.from({ length: 3 }).map((_, fieldIndex) => (
+                    <Skeleton key={fieldIndex} className="h-10 w-48" />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if data fetching failed
+  if (editing && id && adult.isError) {
+    return (
+      <div className="flex flex-col items-center justify-center py-8">
+        <p className="text-destructive mb-4">Failed to load patient data</p>
+        <Button onClick={() => adult.refetch()}>Retry</Button>
+      </div>
+    );
   }
 
   const onSubmit = async (data: CreateAdultType) => {
@@ -96,7 +136,12 @@ export default function AdultForm({
 
   return (
     <FormProvider {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="space-y-4"
+        onSubmit={
+          symptomDialog.isOpen ? undefined : form.handleSubmit(onSubmit as any)
+        }
+      >
         {Object.keys(form.formState.errors).map((error) => (
           <p className="text-destructive flex gap-2 text-sm" key={error}>
             <span>{error}:</span>
@@ -121,6 +166,8 @@ export default function AdultForm({
 
             {/* Past History Section */}
             <PastHistory />
+
+            <Complaints />
 
             <div className="flex justify-end">
               {editing ? (
@@ -484,6 +531,39 @@ const PastHistory = () => {
           {form.watch("surgical") === "icu" && (
             <ControlledInput<CreateAdultType> name="icu" label="ICU Details" />
           )}
+        </Row>
+      </AccordionContent>
+    </AccordionItem>
+  );
+};
+
+const Complaints = () => {
+  return (
+    <AccordionItem
+      value="complaints"
+      className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+    >
+      <AccordionHeader>
+        <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-sm text-[15px] leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+          <h2 className="font-medium">Complaints</h2>
+          <PlusIcon
+            size={16}
+            className="pointer-events-none shrink-0 opacity-60 transition-transform duration-200"
+            aria-hidden="true"
+          />
+        </AccordionPrimitive.Trigger>
+      </AccordionHeader>
+      <AccordionContent className="h-[400px]">
+        <Row className="items-center justify-center">
+          <ControlledMultiSelect<CreateAdultType>
+            name="complaints"
+            loadOptions={fetchSymptomsAutocomplete}
+            defaultOptions={true}
+            placeholder="Type to search symptoms..."
+            noOptionsMessage="No symptoms found"
+            className="flex-1"
+          />
+          <SymptomDialog />
         </Row>
       </AccordionContent>
     </AccordionItem>

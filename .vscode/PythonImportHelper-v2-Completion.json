@@ -579,6 +579,14 @@
         "documentation": {}
     },
     {
+        "label": "SymptomAutocompleteSerializer",
+        "importPath": "others.serializers",
+        "description": "others.serializers",
+        "isExtraImport": true,
+        "detail": "others.serializers",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -1244,7 +1252,7 @@
         "kind": 6,
         "importPath": "backend.others.serializers",
         "description": "backend.others.serializers",
-        "peekOfCode": "class SymptomAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    clinic_name = serializers.CharField(source='clinic.name', read_only=True)\n    class Meta:\n        model = SymptomModel\n        fields = ['id', 'name', 'clinic_name']",
+        "peekOfCode": "class SymptomAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    value = serializers.CharField(source='id', read_only=True)\n    label = serializers.CharField(source='name', read_only=True)\n    class Meta:\n        model = SymptomModel\n        fields = ['value', 'label']",
         "detail": "backend.others.serializers",
         "documentation": {}
     },
@@ -1478,7 +1486,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'mobile_number']\nclass AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    class Meta:\n        model = Adult\n        fields = \"__all__\"",
+        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'mobile_number']\nclass AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    complaints = serializers.SerializerMethodField()\n    class Meta:\n        model = Adult",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -1487,7 +1495,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    class Meta:\n        model = Adult\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def validate_mobile_number(self, value):\n        \"\"\"Validate phone number format\"\"\"\n        if not value:\n            raise serializers.ValidationError(\"Mobile number is required.\")",
+        "peekOfCode": "class AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    complaints = serializers.SerializerMethodField()\n    class Meta:\n        model = Adult\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def get_complaints(self, obj):\n        \"\"\"Return complaints as list of {value, label} objects\"\"\"\n        return [",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -1496,7 +1504,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class AdultAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Adult\n        fields = ['id', 'name', 'mobile_number', 'age', 'occupation']",
+        "peekOfCode": "class AdultAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    complaints = serializers.SerializerMethodField()\n    class Meta:\n        model = Adult\n        fields = ['id', 'name', 'mobile_number', 'age', 'occupation', 'complaints']\n    def get_complaints(self, obj):\n        \"\"\"Return complaints as list of {value, label} objects\"\"\"\n        return [\n            {",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },

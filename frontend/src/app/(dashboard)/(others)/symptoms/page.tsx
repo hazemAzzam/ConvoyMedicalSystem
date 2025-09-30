@@ -1,9 +1,6 @@
 import React from "react";
+import { SymptomDialog } from "./_components/SymptomDialog";
 
 export default function SymptomsPage() {
-  return (
-    <div>
-      <h1>Symptoms</h1>
-    </div>
-  );
+  return "Symptoms";
 }

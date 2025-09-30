@@ -15,7 +15,7 @@ export const usePatients = () => {
 
 export const useAdult = (id: string) => {
   return useQuery({
-    queryKey: ["adult", id],
+    queryKey: ["patients", id],
     queryFn: () => getAdultService(id),
     enabled: !!id,
   });

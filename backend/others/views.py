@@ -298,13 +298,13 @@ class SymptomViewSet(viewsets.ModelViewSet):
         search_query = request.query_params.get('search', '')
         limit = int(request.query_params.get('limit', 10))
         clinic_id = request.query_params.get('clinic_id', '')
-        
-        if not search_query:
-            return Response([])
-        
-        symptoms = SymptomModel.objects.select_related('clinic').filter(
-            name__icontains=search_query
-        )
+                
+        if search_query:
+            symptoms = SymptomModel.objects.select_related('clinic').filter(
+                name__icontains=search_query
+            )
+        else:
+            symptoms = SymptomModel.objects.select_related('clinic').all()
         
         if clinic_id:
             symptoms = symptoms.filter(clinic_id=clinic_id)
@@ -312,6 +312,7 @@ class SymptomViewSet(viewsets.ModelViewSet):
         symptoms = symptoms[:limit]
         
         serializer = self.get_serializer(symptoms, many=True)
+
         return Response(serializer.data)
     
     @action(detail=False, methods=['get'])

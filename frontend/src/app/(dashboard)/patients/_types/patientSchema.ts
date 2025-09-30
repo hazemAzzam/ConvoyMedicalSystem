@@ -93,7 +93,24 @@ export const AdultFieldsSchema = z.object({
   contraception_other_method: z.string().nullable().optional(),
 
   // Complaints (ManyToMany - will be array of IDs)
-  complaints: z.array(z.string()).default([]),
+  complaints: z
+    .array(
+      z.object({
+        value: z.string(),
+        label: z.string(),
+      }),
+    )
+    .default([]),
+
+  // Symptoms (ManyToMany - will be array of IDs)
+  symptoms: z
+    .array(
+      z.object({
+        value: z.string(),
+        label: z.string(),
+      }),
+    )
+    .default([]),
 
   // General Examination
   bp: z.string().nullable().optional(),
@@ -205,6 +222,9 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
 
   // Complaints
   complaints: [],
+
+  // Symptoms
+  symptoms: [],
 
   // General Examination
   bp: null,
