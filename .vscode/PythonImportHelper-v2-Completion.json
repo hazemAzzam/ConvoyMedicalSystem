@@ -1486,7 +1486,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'mobile_number']\nclass AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    complaints = serializers.SerializerMethodField()\n    class Meta:\n        model = Adult",
+        "peekOfCode": "class PatientAutocompleteSerializer(serializers.ModelSerializer):\n    \"\"\"Serializer for autocomplete fields - minimal data\"\"\"\n    class Meta:\n        model = Patient\n        fields = ['id', 'name', 'mobile_number']\nclass AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    class Meta:\n        model = Adult\n        fields = \"__all__\"",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -1495,7 +1495,7 @@
         "kind": 6,
         "importPath": "backend.patients.serializers",
         "description": "backend.patients.serializers",
-        "peekOfCode": "class AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    complaints = serializers.SerializerMethodField()\n    class Meta:\n        model = Adult\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n    def get_complaints(self, obj):\n        \"\"\"Return complaints as list of {value, label} objects\"\"\"\n        return [",
+        "peekOfCode": "class AdultSerializer(serializers.ModelSerializer):\n    \"\"\"Full serializer for Adult model\"\"\"\n    class Meta:\n        model = Adult\n        fields = \"__all__\"\n        read_only_fields = ['id', 'created_at', 'updated_at']\n        extra_kwargs = {\n            'complaints': {'write_only': False}\n        }\n    def validate_mobile_number(self, value):",
         "detail": "backend.patients.serializers",
         "documentation": {}
     },
@@ -1603,7 +1603,7 @@
         "kind": 2,
         "importPath": "backend.scripts.create_random_patients",
         "description": "backend.scripts.create_random_patients",
-        "peekOfCode": "def post_patient_to_api(patient_data: Dict) -> bool:\n    \"\"\"Post a single patient to the API\"\"\"\n    try:\n        response = requests.post(\n            PATIENTS_ENDPOINT,\n            json=patient_data,\n            headers={\"Content-Type\": \"application/json\"}\n        )\n        if response.status_code == 201:\n            print(f\"✅ Created patient: {patient_data['name']} ({patient_data['code']})\")",
+        "peekOfCode": "def post_patient_to_api(patient_data: Dict) -> bool:\n    \"\"\"Post a single patient to the API\"\"\"\n    try:\n        response = requests.post(\n            PATIENTS_ENDPOINT,\n            json=patient_data,\n            headers={\"Content-Type\": \"application/json\"}\n        )\n        if response.status_code == 201:\n            return True",
         "detail": "backend.scripts.create_random_patients",
         "documentation": {}
     },
@@ -1612,7 +1612,7 @@
         "kind": 2,
         "importPath": "backend.scripts.create_random_patients",
         "description": "backend.scripts.create_random_patients",
-        "peekOfCode": "def main():\n    \"\"\"Main function to create random patients\"\"\"\n    print(\"🏥 Random Patient Generator\")\n    print(\"=\" * 50)\n    # Get number of patients to create\n    try:\n        count = int(input(\"How many patients do you want to create? (default: 10): \") or \"10\")\n    except ValueError:\n        count = 10\n    print(f\"\\n📝 Creating {count} random patients...\")",
+        "peekOfCode": "def main():\n    \"\"\"Main function to create random patients\"\"\"\n    # Get number of patients to create\n    try:\n        count = int(input(\"How many patients do you want to create? (default: 10): \") or \"10\")\n    except ValueError:\n        count = 10\n    # Create patients\n    patients = create_patients(count)\n    # Post patients to API",
         "detail": "backend.scripts.create_random_patients",
         "documentation": {}
     },
@@ -1855,7 +1855,7 @@
         "kind": 2,
         "importPath": "backend.rm_cache",
         "description": "backend.rm_cache",
-        "peekOfCode": "def delete_files(base_dir):\n    # Regular expression to match filenames that start with four digits\n    digit_pattern = re.compile(r'^\\d{4}')\n    # Delete sqllite3\n    db_path = os.path.join(base_dir, 'db.sqlite3')\n    if os.path.exists(db_path):\n        os.remove(db_path)\n        print(f\"Deleted: {db_path}\")\n    else:\n        print(f\"Database file not found: {db_path}\")",
+        "peekOfCode": "def delete_files(base_dir):\n    # Regular expression to match filenames that start with four digits\n    digit_pattern = re.compile(r'^\\d{4}')\n    # Delete sqllite3\n    db_path = os.path.join(base_dir, 'db.sqlite3')\n    if os.path.exists(db_path):\n        os.remove(db_path)\n    else:\n    for root, dirs, files in os.walk(base_dir):\n        # Delete Python cache files",
         "detail": "backend.rm_cache",
         "documentation": {}
     },

@@ -102,16 +102,6 @@ export const AdultFieldsSchema = z.object({
     )
     .default([]),
 
-  // Symptoms (ManyToMany - will be array of IDs)
-  symptoms: z
-    .array(
-      z.object({
-        value: z.string(),
-        label: z.string(),
-      }),
-    )
-    .default([]),
-
   // General Examination
   bp: z.string().nullable().optional(),
   hr: z.number().nullable().optional(),
@@ -222,9 +212,6 @@ export const DEFAULT_ADULT_VALUES: z.infer<typeof CreateAdultSchema> = {
 
   // Complaints
   complaints: [],
-
-  // Symptoms
-  symptoms: [],
 
   // General Examination
   bp: null,

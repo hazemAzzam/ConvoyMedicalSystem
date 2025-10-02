@@ -9,9 +9,7 @@ def delete_files(base_dir):
     db_path = os.path.join(base_dir, 'db.sqlite3')
     if os.path.exists(db_path):
         os.remove(db_path)
-        print(f"Deleted: {db_path}")
     else:
-        print(f"Database file not found: {db_path}")
     
     for root, dirs, files in os.walk(base_dir):
         # Delete Python cache files
@@ -20,9 +18,7 @@ def delete_files(base_dir):
                 file_path = os.path.join(root, file)
                 try:
                     os.remove(file_path)
-                    print(f"Deleted: {file_path}")
                 except Exception as e:
-                    print(f"Error deleting {file_path}: {e}")
 
         # Delete files starting with four digits
         for file in files:
@@ -30,9 +26,7 @@ def delete_files(base_dir):
                 file_path = os.path.join(root, file)
                 try:
                     os.remove(file_path)
-                    print(f"Deleted: {file_path}")
                 except Exception as e:
-                    print(f"Error deleting {file_path}: {e}")
 
 # Start deleting from the current directory
 delete_files(os.getcwd())

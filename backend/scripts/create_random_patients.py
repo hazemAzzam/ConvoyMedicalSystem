@@ -159,21 +159,15 @@ def post_patient_to_api(patient_data: Dict) -> bool:
         )
         
         if response.status_code == 201:
-            print(f"✅ Created patient: {patient_data['name']} ({patient_data['code']})")
             return True
         else:
-            print(f"❌ Failed to create patient {patient_data['name']}: {response.status_code}")
-            print(f"   Response: {response.text}")
             return False
             
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error creating patient {patient_data['name']}: {e}")
         return False
 
 def main():
     """Main function to create random patients"""
-    print("🏥 Random Patient Generator")
-    print("=" * 50)
     
     # Get number of patients to create
     try:
@@ -181,9 +175,6 @@ def main():
     except ValueError:
         count = 10
     
-    print(f"\n📝 Creating {count} random patients...")
-    print(f"🌐 API Endpoint: {PATIENTS_ENDPOINT}")
-    print("-" * 50)
     
     # Create patients
     patients = create_patients(count)
@@ -191,19 +182,11 @@ def main():
     # Post patients to API
     success_count = 0
     for i, patient in enumerate(patients, 1):
-        print(f"[{i}/{count}] ", end="")
         if post_patient_to_api(patient):
             success_count += 1
     
-    print("-" * 50)
-    print(f"📊 Summary:")
-    print(f"   Total patients: {count}")
-    print(f"   Successfully created: {success_count}")
-    print(f"   Failed: {count - success_count}")
     
     if success_count > 0:
-        print(f"\n🎉 Successfully created {success_count} patients!")
-        print(f"   Check your Django admin or API to see the new patients.")
 
 if __name__ == "__main__":
     main()

@@ -120,11 +120,9 @@ export default function AdultForm({
           id: id,
           ...data,
         } as UpdateAdultType);
-        toast.success("Patient updated successfully");
         form.reset(updatedAdult);
       } else {
         await createAdultMutation.mutateAsync(data as CreateAdultType);
-        toast.success("Patient created successfully");
       }
       form.reset();
     } catch (error) {

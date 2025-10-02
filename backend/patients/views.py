@@ -71,6 +71,12 @@ class AdultViewSet(viewsets.ModelViewSet):
         if self.action == 'autocomplete':
             return AdultAutocompleteSerializer
         return AdultSerializer
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+    
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
     
     @action(detail=False, methods=['get'])
     def autocomplete(self, request):

@@ -52,17 +52,11 @@ def create_quick_patients():
             )
             
             if response.status_code == 201:
-                print(f"✅ Created: {name}")
                 patients_created += 1
             else:
-                print(f"❌ Failed: {name} - {response.status_code}")
                 
         except Exception as e:
-            print(f"❌ Error: {name} - {e}")
     
-    print(f"\n🎉 Created {patients_created}/5 patients successfully!")
 
 if __name__ == "__main__":
-    print("🏥 Quick Patient Creator")
-    print("Creating 5 random patients...")
     create_quick_patients()
